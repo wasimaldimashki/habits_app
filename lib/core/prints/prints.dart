@@ -1,0 +1,24 @@
+import 'dart:developer';
+
+void printWarningLong(String text) {
+  print(
+      '\x1B[33m//////////////////////////////////////////////////////////////////////////\x1B[0m');
+  log(text);
+}
+
+void printWarning(String text) {
+  print('\x1B[33m$text\x1B[0m');
+  log(text);
+}
+
+void printGreen(String text) {
+  print('\x1B[32m$text\x1B[0m');
+}
+
+void printBlue(String text) {
+  print('\x1B[34m$text\x1B[0m');
+}
+
+void printRed(String text) {
+  print('\x1B[31m$text\x1B[0m');
+}

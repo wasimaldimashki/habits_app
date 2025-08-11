@@ -1,7 +1,38 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:habits_app/core/app_observer/simple_bloc_observer.dart';
+import 'package:habits_app/core/localization/localization_cubit.dart';
+import 'package:habits_app/core/services/service_locator.dart';
+import 'package:habits_app/core/theme/theme_cubit.dart';
+import 'package:habits_app/core/theme/theme_manager.dart';
+import 'package:habits_app/generated/l10n.dart';
+import 'package:habits_app/routes/app_router.dart';
+import 'package:path_provider/path_provider.dart' as path;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await setupServiceLocator();
+  PaintingBinding.instance.imageCache
+    ..maximumSize = 100
+    ..maximumSizeBytes = 100 << 20;
+  HydratedBloc.storage = HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: kIsWeb
+        ? HydratedStorageDirectory.web
+        : HydratedStorageDirectory((await path.getTemporaryDirectory()).path),
+  );
+
+  // await FirebaseApi().initNotification();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
+  Bloc.observer = SimpleBlocObserver();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -9,58 +40,41 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => ThemeCubit()),
+        BlocProvider(create: (context) => LocalizationCubit()),
+      ],
+      child: BlocBuilder<ThemeCubit, ThemeMode>(
+        builder: (context, themeMode) {
+          return BlocBuilder<LocalizationCubit, Locale>(
+            builder: (context, locale) {
+              return ScreenUtilInit(
+                designSize: const Size(375, 812),
+                ensureScreenSize: true,
+                useInheritedMediaQuery: true,
+                minTextAdapt: true,
+                splitScreenMode: true,
+                builder: (context, child) => MaterialApp.router(
+                  title: 'Habit App',
+                  debugShowCheckedModeBanner: false,
+                  theme: getLightApplicationTheme(),
+                  darkTheme: getDarkApplicationTheme(),
+                  themeMode: themeMode,
+                  routerConfig: AppRouter.router,
+                  localizationsDelegates: const [
+                    S.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    GlobalCupertinoLocalizations.delegate,
+                  ],
+                  supportedLocales: S.delegate.supportedLocales,
+                  locale: locale,
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
