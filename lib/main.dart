@@ -13,14 +13,16 @@ import 'package:habits_app/generated/l10n.dart';
 import 'package:habits_app/routes/app_router.dart';
 import 'package:path_provider/path_provider.dart' as path;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
   await setupServiceLocator();
   PaintingBinding.instance.imageCache
     ..maximumSize = 100
     ..maximumSizeBytes = 100 << 20;
-  HydratedBloc.storage = HydratedBloc.storage = await HydratedStorage.build(
+  HydratedBloc.storage = await HydratedStorage.build(
     storageDirectory: kIsWeb
         ? HydratedStorageDirectory.web
         : HydratedStorageDirectory((await path.getTemporaryDirectory()).path),
