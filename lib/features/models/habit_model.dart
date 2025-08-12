@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'habit_model.g.dart';
@@ -41,7 +40,7 @@ class HabitModel extends Equatable {
     this.daysOfWeek,
     this.interval,
     required this.creationDate,
-    required this.completedDates,
+    this.completedDates = const {},
   });
 
   @override
@@ -59,23 +58,31 @@ class HabitModel extends Equatable {
   HabitModel copyWith({
     String? id,
     String? name,
-    ValueNotifier<String?>? description,
+    String? description,
     HabitRecurrenceType? recurrenceType,
-    ValueNotifier<List<int>?>? daysOfWeek,
-    ValueNotifier<int?>? interval,
+    List<int>? daysOfWeek,
+    int? interval,
     DateTime? creationDate,
     Map<String, bool>? completedDates,
   }) {
     return HabitModel(
       id: id ?? this.id,
       name: name ?? this.name,
-      description: description != null ? description.value : this.description,
+      description: description ?? this.description,
       recurrenceType: recurrenceType ?? this.recurrenceType,
-      daysOfWeek: daysOfWeek != null ? daysOfWeek.value : this.daysOfWeek,
-      interval: interval != null ? interval.value : this.interval,
+      daysOfWeek: daysOfWeek ?? this.daysOfWeek,
+      interval: interval ?? this.interval,
       creationDate: creationDate ?? this.creationDate,
       completedDates: completedDates ?? this.completedDates,
     );
+  }
+
+  /// Checks if the habit was completed on a specific date.
+  bool isCompletedForDate(DateTime date) {
+    // Format the date to a string key in the format "YYYY-MM-DD"
+    final dateKey = date.toIso8601String().substring(0, 10);
+    // Return true if the map contains the date key and its value is true, otherwise false.
+    return completedDates[dateKey] ?? false;
   }
 }
 

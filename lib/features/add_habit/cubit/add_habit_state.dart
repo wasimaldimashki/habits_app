@@ -41,9 +41,27 @@ final class AddHabitFormState extends AddHabitState {
   });
 }
 
-final class AddHabitLoading extends AddHabitState {}
+final class AddHabitLoading extends AddHabitState {
+  const AddHabitLoading({
+    required super.habitName,
+    required super.habitDescription,
+    required super.recurrenceType,
+    required super.selectedDays,
+    required super.everyXDaysInterval,
+    required super.isFormValid,
+  });
+}
 
-final class AddHabitSuccess extends AddHabitState {}
+final class AddHabitSuccess extends AddHabitState {
+  const AddHabitSuccess({
+    required super.habitName,
+    required super.habitDescription,
+    required super.recurrenceType,
+    required super.selectedDays,
+    required super.everyXDaysInterval,
+    required super.isFormValid,
+  });
+}
 
 final class AddHabitError extends AddHabitState {
   final String errorMessage;

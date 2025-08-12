@@ -29,6 +29,7 @@ dependencies:
   path_provider: ^2.1.5
   hydrated_bloc: ^10.1.1
   local_auth: ^2.3.0
+  table_calendar: ^3.2.0
   font_awesome_flutter: ^10.8.0
   flutter_snake_navigationbar: ^0.6.1
   flutter_bloc: ^9.1.1

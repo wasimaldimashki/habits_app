@@ -116,7 +116,9 @@ class AddHabitScreen extends StatelessWidget {
                   CustomButtonWidget(
                     borederRadius: defaultRadius,
                     title: S.of(context).submit,
-                    onPressed: state.isFormValid ? cubit.saveHabit : null,
+                    onPressed: () async {
+                      await cubit.saveHabit();
+                    },
                   ),
                 ],
               ),
