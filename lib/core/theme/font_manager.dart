@@ -26,5 +26,6 @@ class FontSizeManager {
   static double s22 = 22.0.spMin;
   static double s24 = 24.0.spMin;
   static double s28 = 28.0.spMin;
+  static double s30 = 30.0.spMin;
   static double s32 = 32.0.spMin;
 }

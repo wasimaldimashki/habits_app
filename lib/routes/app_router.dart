@@ -6,6 +6,7 @@ import 'package:habits_app/core/keys/app_keys.dart';
 import 'package:habits_app/features/add_habit/cubit/add_habit_cubit.dart';
 import 'package:habits_app/features/add_habit/screens/add_habit.dart';
 import 'package:habits_app/features/home/cubits/habit_screen_cubit/habit_screen_cubit.dart';
+import 'package:habits_app/features/home/cubits/statistics_cubit/statistics_cubit.dart';
 import 'package:habits_app/features/home/home_screen.dart';
 import 'package:habits_app/features/signin/cubit/signin_cubit.dart';
 import 'package:habits_app/features/signin/siginin_screen.dart';
@@ -46,8 +47,15 @@ class AppRouter {
       GoRoute(
         name: 'Home Screen',
         path: AppRoutes.homeScreen,
-        builder: (context, state) => BlocProvider(
-          create: (context) => HabitScreenCubit()..loadAllHabits(),
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider(
+              create: (context) => HabitScreenCubit()..loadAllHabits(),
+            ),
+            // BlocProvider(
+            //   create: (context) => StatisticsCubit()..loadStatistics(),
+            // ),
+          ],
           child: const HomeScreen(),
         ),
       ),

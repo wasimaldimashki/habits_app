@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:habits_app/core/cache/hive_service.dart';
 import 'package:habits_app/core/cache/cache_service.dart';
+import 'package:habits_app/features/home/cubits/statistics_cubit/statistics_cubit.dart';
 import 'package:habits_app/features/models/habit_model.dart';
 import 'package:habits_app/features/models/user_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -35,4 +36,5 @@ Future<void> setupServiceLocator() async {
   sl.registerLazySingleton<CacheService>(
     () => CacheService(sharedPreferences: sl()),
   );
+  sl.registerFactory<StatisticsCubit>(() => StatisticsCubit());
 }
