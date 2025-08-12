@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/widgets.dart'; // Import for GlobalKey
+import 'package:flutter/widgets.dart';
 import 'package:habits_app/core/cache/hive_service.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
 import 'package:habits_app/core/services/service_locator.dart';
@@ -30,7 +30,7 @@ class AddHabitCubit extends Cubit<AddHabitState> {
   }
 
   // A single emit function to update state based on current values and validity.
-  void _emitUpdatedState() {
+  void emitUpdatedState() {
     emit(AddHabitFormState(
       habitName: state.habitName,
       habitDescription: state.habitDescription,
@@ -48,8 +48,7 @@ class AddHabitCubit extends Cubit<AddHabitState> {
       recurrenceType: state.recurrenceType,
       selectedDays: state.selectedDays,
       everyXDaysInterval: state.everyXDaysInterval,
-      isFormValid:
-          name.isNotEmpty, // Simplified validation for just the name field
+      isFormValid: name.isNotEmpty,
     ));
   }
 
@@ -122,7 +121,7 @@ class AddHabitCubit extends Cubit<AddHabitState> {
     try {
       final habit = HabitModel(
         id: const Uuid().v4(),
-        name: state.habitName, // Now 'state' holds the correct data.
+        name: state.habitName,
         description: state.habitDescription,
         recurrenceType: state.recurrenceType,
         daysOfWeek: state.recurrenceType == HabitRecurrenceType.weekly

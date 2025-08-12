@@ -22,7 +22,8 @@ ThemeData getLightApplicationTheme() {
     //** AppBar Theme **/
     appBarTheme: AppBarTheme(
       centerTitle: true,
-      color: AppColors.lightSurface,
+      // color: AppColors.lightSurface,
+      backgroundColor: AppColors.white,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
       titleTextStyle: getRegularStyle(color: AppColors.lightTextPrimary),

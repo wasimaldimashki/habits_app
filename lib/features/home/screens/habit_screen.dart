@@ -10,7 +10,6 @@ class HabitScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // context.read<HabitScreenCubit>().loadAllHabits();
     return Scaffold(
       body: BlocBuilder<HabitScreenCubit, HabitScreenState>(
         builder: (context, state) {

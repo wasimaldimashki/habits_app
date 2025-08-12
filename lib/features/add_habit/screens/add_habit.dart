@@ -14,10 +14,7 @@ class AddHabitScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.getBackgroundColor(context),
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
         title: Text(
           'Add Habit',
           style: getSemiBoldStyle(
@@ -30,7 +27,7 @@ class AddHabitScreen extends StatelessWidget {
         listener: (context, state) {
           if (state is AddHabitSuccess) {
             // Navigate back after successful habit creation
-            context.pop();
+            context.pop(true);
           }
           if (state is AddHabitError) {
             // Show a snackbar with the error message

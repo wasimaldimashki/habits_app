@@ -1,5 +1,7 @@
 import 'package:habits_app/core/export/lib_exports.dart';
 import 'package:habits_app/features/shared/widgets/floating-action-button/floating_speed_dial.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habits_app/features/home/cubits/habit_screen_cubit/habit_screen_cubit.dart';
 import 'package:habits_app/features/shared/widgets/floating-action-button/floating_speed_dial_child.dart';
 
 class FloatBtnWidget extends StatelessWidget {
@@ -19,7 +21,11 @@ class FloatBtnWidget extends StatelessWidget {
           backgroundColor: AppColors.primary.withOpacity(0.9),
           label: 'Add Habit',
           onPressed: () async {
-            context.push(AppRoutes.addHabitScreen);
+            final result = await context.push(AppRoutes.addHabitScreen);
+            if (result == true) {
+              // ignore: use_build_context_synchronously
+              BlocProvider.of<HabitScreenCubit>(context).loadAllHabits();
+            }
           },
         ),
         FloatingSpeedDialChild(
