@@ -1,8 +1,8 @@
 import 'package:habits_app/core/export/lib_exports.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habits_app/features/home/cubits/statistics_cubit/statistics_cubit.dart';
+import 'package:habits_app/features/home/widgets/statistic_screen/completion_rate_card.dart';
 import 'package:habits_app/features/home/widgets/statistic_screen/statistic_card_widget.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 class StatisticsScreen extends StatelessWidget {
   const StatisticsScreen({super.key});
@@ -25,7 +25,6 @@ class StatisticsScreen extends StatelessWidget {
         ),
         body: BlocListener<StatisticsCubit, StatisticsState>(
           listener: (context, state) {
-            // Listen to changes in HabitsCubit and reload statistics
             if (state is StatisticsLoaded) {
               context.read<StatisticsCubit>().loadStatistics();
             }
@@ -48,8 +47,7 @@ class StatisticsScreen extends StatelessWidget {
                         ),
                       ),
                       SizedBox(height: AppSize.s20.h),
-                      // Pass the raw completion rate (0.0 - 1.0) to the widget
-                      _CompletionRateCard(
+                      CompletionRateCard(
                           completionRate: state.completionRate / 100),
                       SizedBox(height: AppSize.s20.h),
                       StatisticCardWidget(
@@ -87,74 +85,6 @@ class StatisticsScreen extends StatelessWidget {
             },
           ),
         ),
-      ),
-    );
-  }
-}
-
-// Custom widget for the circular progress indicator
-class _CompletionRateCard extends StatelessWidget {
-  final double completionRate;
-
-  const _CompletionRateCard({required this.completionRate});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: REdgeInsets.all(AppPadding.p16),
-      decoration: BoxDecoration(
-        color: AppColors.getSurfaceColor(context),
-        borderRadius: BorderRadius.circular(AppSize.s16),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.getTextSecondaryColor(context).withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Completion Rate',
-                style: getMediumStyle(
-                  color: AppColors.getTextSecondaryColor(context),
-                  fontSize: FontSizeManager.s16,
-                ),
-              ),
-              SizedBox(height: AppSize.s8.h),
-              Text(
-                // Multiply by 100 for text display only
-                '${(completionRate * 100).toStringAsFixed(1)}%',
-                style: getSemiBoldStyle(
-                  color: AppColors.getTextPrimaryColor(context),
-                  fontSize: FontSizeManager.s30,
-                ),
-              ),
-            ],
-          ),
-          CircularPercentIndicator(
-            radius: AppSize.s40.r,
-            lineWidth: AppSize.s8.w,
-            // Pass the raw value (0.0 - 1.0) here
-            percent: completionRate,
-            center: Text(
-              '${(completionRate * 100).toStringAsFixed(0)}%',
-              style: getSemiBoldStyle(
-                color: AppColors.getTextPrimaryColor(context),
-                fontSize: FontSizeManager.s16,
-              ),
-            ),
-            progressColor: AppColors.primary,
-            backgroundColor: AppColors.getBackgroundColor(context),
-            curve: Curves.easeIn,
-            animation: true,
-          ),
-        ],
       ),
     );
   }

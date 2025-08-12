@@ -4,7 +4,7 @@ import 'floating_speed_dial_child.dart';
 
 class FloatingSpeedDial extends StatefulWidget {
   const FloatingSpeedDial({
-    Key? key,
+    super.key,
     required this.child,
     required this.speedDialChildren,
     this.labelsStyle,
@@ -14,7 +14,7 @@ class FloatingSpeedDial extends StatefulWidget {
     this.openForegroundColor,
     this.closedBackgroundColor,
     this.openBackgroundColor,
-  }) : super(key: key);
+  });
 
   final Widget child;
 
@@ -165,8 +165,10 @@ class _SpeedDialState extends State<FloatingSpeedDial>
                           child: FloatingActionButton(
                             heroTag: speedDialChildAnimationIndex,
                             mini: true,
-                            foregroundColor: floatingSpeedDialChild.foregroundColor,
-                            backgroundColor: floatingSpeedDialChild.backgroundColor,
+                            foregroundColor:
+                                floatingSpeedDialChild.foregroundColor,
+                            backgroundColor:
+                                floatingSpeedDialChild.backgroundColor,
                             onPressed: () => _onTap(floatingSpeedDialChild),
                             child: floatingSpeedDialChild.child,
                           ),
