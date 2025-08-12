@@ -29,6 +29,9 @@ class CustomFormTextField extends StatelessWidget {
     this.enableCustomIcon = false,
     this.inputFormatters,
     this.colorPrefixIcon,
+    this.counterText,
+    this.maxLength,
+    this.initialValue,
   });
 
   bool? obscureText;
@@ -56,6 +59,9 @@ class CustomFormTextField extends StatelessWidget {
   Widget? suffixWidget;
   void Function(String)? onFieldSubmitted;
   List<TextInputFormatter>? inputFormatters;
+  String? counterText;
+  int? maxLength;
+  String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -75,11 +81,13 @@ class CustomFormTextField extends StatelessWidget {
           ),
         ),
         TextFormField(
+          initialValue: initialValue,
           inputFormatters: inputFormatters,
           focusNode: focusNode,
           textInputAction: textInputAction,
           readOnly: readOnly!,
           maxLines: maxLines,
+          maxLength: maxLength,
           onFieldSubmitted: onFieldSubmitted,
           obscureText: obscureText!,
           keyboardType: keyboardType,
@@ -92,6 +100,7 @@ class CustomFormTextField extends StatelessWidget {
               prefixIcon,
               color: colorPrefixIcon,
             ),
+            counterText: counterText,
             hintText: hintText,
             hintStyle: TextStyle(color: Colors.grey.withOpacity(0.5)),
             labelStyle: styleInput ?? const TextStyle(color: Colors.grey),

@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:habits_app/core/cache/hive_service.dart';
 import 'package:habits_app/core/cache/cache_service.dart';
+import 'package:habits_app/features/models/habit_model.dart';
 import 'package:habits_app/features/models/user_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,7 +25,13 @@ Future<void> setupServiceLocator() async {
       return service;
     },
   );
-
+  sl.registerSingletonAsync<GenericHiveService<HabitModel>>(
+    () async {
+      final service = GenericHiveService<HabitModel>('habits_box');
+      await service.openBox();
+      return service;
+    },
+  );
   sl.registerLazySingleton<CacheService>(
     () => CacheService(sharedPreferences: sl()),
   );
