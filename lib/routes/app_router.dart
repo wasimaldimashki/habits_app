@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:habits_app/core/app_observer/navigator_observer.dart';
 import 'package:habits_app/core/keys/app_keys.dart';
+import 'package:habits_app/features/about_us/about_us.dart';
 import 'package:habits_app/features/add_habit/cubit/add_habit_cubit.dart';
 import 'package:habits_app/features/add_habit/screens/add_habit.dart';
 import 'package:habits_app/features/home/cubits/habit_screen_cubit/habit_screen_cubit.dart';
@@ -66,6 +67,12 @@ class AppRouter {
           create: (context) => AddHabitCubit(),
           child: const AddHabitScreen(),
         ),
+      ),
+      //** About us Screen **/
+      GoRoute(
+        name: 'About Us Screen',
+        path: AppRoutes.aboutUsScreen,
+        builder: (context, state) => const AboutUsScreen(),
       ),
     ],
     errorPageBuilder: (context, state) => MaterialPage(

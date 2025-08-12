@@ -10,6 +10,9 @@ class FloatBtnWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingSpeedDial(
+      labelsStyle: getMediumStyle(
+        color: AppColors.getTextPrimaryColor(context),
+      ),
       openForegroundColor: AppColors.primary.withOpacity(0.9),
       openBackgroundColor: AppColors.accent,
       closedBackgroundColor: AppColors.primary.withOpacity(0.9),

@@ -20,6 +20,10 @@ class GenericHiveService<T> {
     return _box!;
   }
 
+  T? getSingleItem() {
+    return box.isNotEmpty ? box.values.first : null;
+  }
+
   Future<void> add(T item) async {
     final dynamic typedItem = item;
     if (typedItem is HabitModel) {
