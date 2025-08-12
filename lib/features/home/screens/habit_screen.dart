@@ -45,7 +45,6 @@ class HabitScreen extends StatelessWidget {
                   selectedDate: state.selectedDate,
                   onDaySelected: (date) => cubit.onDaySelected(date),
                 ),
-                SizedBox(height: AppSize.s40.h),
                 Text(
                   'Habits',
                   style: getSemiBoldStyle(

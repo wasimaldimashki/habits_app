@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
+import 'package:habits_app/features/home/widgets/habit_screen/date_item.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarHorizontalWidget extends StatelessWidget {
@@ -29,51 +29,27 @@ class CalendarHorizontalWidget extends StatelessWidget {
         daysOfWeekVisible: false,
         calendarBuilders: CalendarBuilders(
           defaultBuilder: (context, day, focusedDay) {
-            return _buildDateItem(context, day, false);
-          },
-          todayBuilder: (context, day, focusedDay) {
-            return _buildDateItem(context, day, isSameDay(day, DateTime.now()));
+            return DateItem(
+              day: day,
+              isSelected: false,
+              isToday: isSameDay(day, DateTime.now()),
+            );
           },
           selectedBuilder: (context, day, focusedDay) {
-            return _buildDateItem(context, day, true);
+            return DateItem(
+              day: day,
+              isSelected: true,
+              isToday: isSameDay(day, DateTime.now()),
+            );
+          },
+          todayBuilder: (context, day, focusedDay) {
+            return DateItem(
+              day: day,
+              isSelected: isSameDay(day, selectedDate),
+              isToday: true,
+            );
           },
         ),
-      ),
-    );
-  }
-
-  Widget _buildDateItem(BuildContext context, DateTime day, bool isSelected) {
-    return Container(
-      padding: REdgeInsets.symmetric(horizontal: AppPadding.p2),
-      decoration: isSelected
-          ? BoxDecoration(
-              color: AppColors.primary,
-              borderRadius: BorderRadius.circular(AppSize.s16),
-            )
-          : null,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            day.day.toString(),
-            style: getSemiBoldStyle(
-              color: isSelected
-                  ? AppColors.white
-                  : AppColors.getTextPrimaryColor(context),
-              fontSize: FontSizeManager.s16,
-            ),
-          ),
-          SizedBox(height: AppSize.s4.h),
-          Text(
-            ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'][day.weekday - 1],
-            style: getRegularStyle(
-              color: isSelected
-                  ? AppColors.white
-                  : AppColors.getTextSecondaryColor(context),
-              fontSize: FontSizeManager.s14,
-            ),
-          ),
-        ],
       ),
     );
   }
