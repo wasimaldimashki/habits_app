@@ -3,6 +3,7 @@ class ImageApplication {
   static const String logo = 'assets/icons/logo_app.png';
   static const String noHabits = 'assets/images/empty_habits.png';
   static const String addHabit = 'assets/images/add_habit.png';
+  static const String profileImage = 'assets/images/profile-pic.png';
 
   //** Lottie Image **/
   static const String notFoundPage = 'assets/lotties/not_found_page.json';

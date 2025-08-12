@@ -1,6 +1,4 @@
-import 'package:habits_app/core/cache/cache_service.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
-import 'package:habits_app/core/services/service_locator.dart';
 import 'package:habits_app/features/home/widgets/profile_screen/profile_card_widget.dart';
 import 'package:habits_app/features/home/widgets/profile_screen/profile_header.dart';
 import 'package:habits_app/features/shared/widgets/theme_switcher.dart';
@@ -15,7 +13,6 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 24.h),
             ProfileHeader(),
             SizedBox(height: 24.h),
             Padding(
