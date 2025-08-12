@@ -4,7 +4,6 @@ import 'package:habits_app/core/services/service_locator.dart';
 import 'package:habits_app/features/home/cubits/profile_header_cubit/profile_header_cubit.dart';
 import 'package:habits_app/features/home/widgets/profile_screen/profile_card_widget.dart';
 import 'package:habits_app/features/home/widgets/profile_screen/profile_header.dart';
-import 'package:habits_app/features/shared/widgets/theme_switcher.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -59,8 +58,6 @@ class ProfileScreen extends StatelessWidget {
                         context.push(AppRoutes.aboutUsScreen);
                       },
                     ),
-                    SizedBox(height: 12.h),
-                    ThemeSwitcher(),
                   ],
                 ),
               ),

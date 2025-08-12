@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
 import 'package:habits_app/core/services/service_locator.dart';
 import 'package:habits_app/features/home/cubits/profile_header_cubit/profile_header_cubit.dart';
+import 'package:habits_app/features/shared/widgets/theme_switcher.dart';
 
 class ProfileHeader extends StatelessWidget {
   const ProfileHeader({super.key});
@@ -21,6 +22,7 @@ class ProfileHeader extends StatelessWidget {
 
             return Stack(
               children: [
+                ThemeSwitcher(),
                 Container(
                   width: double.infinity,
                   height: 250.h,
@@ -31,6 +33,11 @@ class ProfileHeader extends StatelessWidget {
                       bottomRight: Radius.circular(30.r),
                     ),
                   ),
+                ),
+                Positioned(
+                  top: 16.h,
+                  right: 16.w,
+                  child: ThemeSwitcher(),
                 ),
                 Positioned.fill(
                   child: Column(
