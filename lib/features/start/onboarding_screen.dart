@@ -96,7 +96,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             if (_isLastPage) {
                               sl.call<CacheService>().saveData(
                                   key: 'isOnBoardingCompleted', value: 'true');
-                              // context.go(AppRoutes.loginScreen);
+                              context.go(AppRoutes.signInScreen);
                             } else {
                               _pageController.nextPage(
                                 duration: const Duration(milliseconds: 400),

@@ -1,48 +1,45 @@
-// import 'package:hive/hive.dart';
+import 'package:hive/hive.dart';
 
-// class HiveService {
-//   final Box _habitsBox;
+class GenericHiveService<T> {
+  final String boxName;
+  Box<T>? _box;
 
-//   // The constructor takes the Hive box as a dependency.
-//   // This is where GetIt will inject the opened box.
-//   HiveService(this._habitsBox);
+  GenericHiveService(this.boxName);
 
-//   /// Saves a new habit or updates an existing one.
-//   /// Hive handles the key-value pair, so we use the habit's ID as the key.
-//   Future<void> saveHabit(HabitModel habit) async {
-//     await _habitsBox.put(habit.id, habit);
-//   }
+  Future<void> openBox() async {
+    if (_box == null || !_box!.isOpen) {
+      _box = await Hive.openBox<T>(boxName);
+    }
+  }
 
-//   /// Retrieves a single habit by its ID.
-//   HabitModel? getHabit(String id) {
-//     return _habitsBox.get(id);
-//   }
+  Box<T> get box {
+    if (_box == null || !_box!.isOpen) {
+      throw Exception('Box $boxName is not open. Call openBox() first.');
+    }
+    return _box!;
+  }
 
-//   /// Retrieves all habits from the box.
-//   /// Returns a list of HabitModel objects.
-//   List<HabitModel> getAllHabits() {
-//     return _habitsBox.values.cast<HabitModel>().toList();
-//   }
+  Future<void> saveItem(String key, T item) async {
+    await box.put(key, item);
+  }
 
-//   /// Deletes a habit using its ID.
-//   Future<void> deleteHabit(String id) async {
-//     await _habitsBox.delete(id);
-//   }
+  T? getItem(String key) {
+    return box.get(key);
+  }
 
-//   /// Clears all habits from the box.
-//   Future<void> clearAllHabits() async {
-//     await _habitsBox.clear();
-//   }
+  Future<void> deleteItem(String key) async {
+    await box.delete(key);
+  }
 
-//   /// Checks if a habit with a given ID exists.
-//   bool habitExists(String id) {
-//     return _habitsBox.containsKey(id);
-//   }
-// }
+  Future<void> clearAll() async {
+    await box.clear();
+  }
 
-// // In setupServiceLocator, you would now register this service like so:
-// /*
-//   sl.registerLazySingleton<HiveService>(
-//     () => HiveService(sl<Box>()),
-//   );
-// */
+  bool itemExists(String key) {
+    return box.containsKey(key);
+  }
+
+  List<T> getAllItems() {
+    return box.values.toList();
+  }
+}

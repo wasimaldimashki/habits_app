@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:habits_app/core/app_observer/navigator_observer.dart';
 import 'package:habits_app/core/keys/app_keys.dart';
 import 'package:habits_app/features/home/home_screen.dart';
+import 'package:habits_app/features/signin/cubit/signin_cubit.dart';
+import 'package:habits_app/features/signin/siginin_screen.dart';
 import 'package:habits_app/features/start/onboarding_screen.dart';
 import 'package:habits_app/features/start/splash_screen.dart';
 import 'package:habits_app/routes/app_routes.dart';
@@ -27,6 +29,15 @@ class AppRouter {
         name: 'OnBoarding Screen',
         path: AppRoutes.onBoardingScreen,
         builder: (context, state) => const OnboardingScreen(),
+      ),
+      //** OnBoarding Screen **/
+      GoRoute(
+        name: 'signIn Screen',
+        path: AppRoutes.signInScreen,
+        builder: (context, state) => BlocProvider(
+          create: (context) => SigninCubit(),
+          child: const SigininScreen(),
+        ),
       ),
       //** Home Screen **/
       GoRoute(

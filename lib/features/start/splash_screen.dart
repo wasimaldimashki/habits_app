@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:habits_app/core/cache/cache_service.dart';
+import 'package:habits_app/core/cache/hive_service.dart';
 import 'package:habits_app/core/constants/image_application.dart';
 import 'package:habits_app/core/services/service_locator.dart';
+import 'package:habits_app/features/models/user_model.dart';
 import 'package:habits_app/routes/app_routes.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,7 +18,9 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-
+  // Get the Hive service for UserModel from the service locator
+  final GenericHiveService<UserModel> _userService =
+      sl<GenericHiveService<UserModel>>();
   @override
   void initState() {
     super.initState();
@@ -30,11 +34,14 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    _controller.addStatusListener((status) {
+    _controller.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
+        final bool isUserExist = await _userService.itemExists('current_user');
         String? isOnBoardingCompleted =
             sl.call<CacheService>().getData(key: 'isOnBoardingCompleted');
-        if (isOnBoardingCompleted == 'true') {
+        if (isOnBoardingCompleted == 'true' && isUserExist == false) {
+          context.go(AppRoutes.signInScreen);
+        } else if (isOnBoardingCompleted == 'true' && isUserExist == true) {
           context.go(AppRoutes.homeScreen);
         } else {
           context.go(AppRoutes.onBoardingScreen);

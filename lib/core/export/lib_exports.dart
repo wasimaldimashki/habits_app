@@ -6,3 +6,7 @@ export 'package:flutter_screenutil/flutter_screenutil.dart';
 export 'package:habits_app/core/theme/color_manager.dart';
 export 'package:habits_app/generated/l10n.dart';
 export 'package:go_router/go_router.dart';
+export 'package:habits_app/core/theme/color_manager.dart';
+export 'package:habits_app/core/theme/font_manager.dart';
+export 'package:habits_app/core/theme/styles_manager.dart';
+export 'package:habits_app/core/theme/values_manager.dart';

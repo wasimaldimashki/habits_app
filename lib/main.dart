@@ -13,12 +13,12 @@ import 'package:habits_app/generated/l10n.dart';
 import 'package:habits_app/routes/app_router.dart';
 import 'package:path_provider/path_provider.dart' as path;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Hive.initFlutter();
   await setupServiceLocator();
+  // Wait for all async singletons to be ready.
+  await sl.allReady();
   PaintingBinding.instance.imageCache
     ..maximumSize = 100
     ..maximumSizeBytes = 100 << 20;

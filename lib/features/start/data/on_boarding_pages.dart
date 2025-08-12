@@ -3,20 +3,18 @@ import 'package:habits_app/core/constants/image_application.dart';
 final List<Map<String, String>> onboardingPages = [
   {
     'image': ImageApplication.onBoardingIMage1,
-    'title': 'Discover the best foods',
-    'description':
-        'Browse our delicious and diverse menu and discover your favorite dishes.',
+    'title': 'Build Better Habits',
+    'description': 'Start your journey towards improved productivity...',
   },
   {
     'image': ImageApplication.onBoardingIMage2,
-    'title': 'Order easily',
+    'title': 'Optimize Your Time',
     'description':
-        'Choose your items, modify them to your liking, and complete your order in a few simple steps.',
+        'Time is your most valuable resource, make every moment count...',
   },
   {
     'image': ImageApplication.onBoardingIMage3,
-    'title': 'Track your order',
-    'description':
-        'Stay updated on the status of your order from the moment it is confirmed until it reaches you.',
+    'title': 'Track Your Habits',
+    'description': 'Input habits and watch your progress over time...',
   },
 ];
