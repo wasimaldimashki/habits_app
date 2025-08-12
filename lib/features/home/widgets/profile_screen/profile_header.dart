@@ -11,7 +11,6 @@ class ProfileHeader extends StatelessWidget {
     return BlocProvider(
       create: (context) {
         final cubit = sl<ProfileHeaderCubit>();
-        cubit.loadUserProfile();
         return cubit;
       },
       child: BlocBuilder<ProfileHeaderCubit, ProfileHeaderState>(

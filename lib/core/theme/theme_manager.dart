@@ -26,7 +26,8 @@ ThemeData getLightApplicationTheme() {
       backgroundColor: AppColors.white,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
-      titleTextStyle: getRegularStyle(color: AppColors.lightTextPrimary),
+      titleTextStyle: getRegularStyle(
+          color: AppColors.lightTextPrimary, fontSize: AppSize.s16),
       iconTheme: IconThemeData(color: AppColors.lightTextPrimary),
       actionsIconTheme: IconThemeData(color: AppColors.lightTextPrimary),
     ),
@@ -62,8 +63,8 @@ ThemeData getLightApplicationTheme() {
           ),
         ),
         backgroundColor: const WidgetStatePropertyAll(AppColors.primary),
-        foregroundColor: const WidgetStatePropertyAll(
-            AppColors.darkTextPrimary), // لون النص على الزر
+        foregroundColor:
+            const WidgetStatePropertyAll(AppColors.darkTextPrimary),
       ),
     ),
 
@@ -78,8 +79,7 @@ ThemeData getLightApplicationTheme() {
         side: WidgetStatePropertyAll(
           BorderSide(color: AppColors.lightBorder, width: 1.0),
         ),
-        foregroundColor:
-            WidgetStatePropertyAll(AppColors.lightTextPrimary), // لون النص
+        foregroundColor: WidgetStatePropertyAll(AppColors.lightTextPrimary),
       ),
     ),
 
@@ -192,7 +192,8 @@ ThemeData getDarkApplicationTheme() {
       color: AppColors.darkSurface,
       surfaceTintColor: Colors.transparent,
       elevation: 0,
-      titleTextStyle: getRegularStyle(color: AppColors.darkTextPrimary),
+      titleTextStyle: getRegularStyle(
+          color: AppColors.darkTextPrimary, fontSize: AppSize.s16),
       iconTheme: IconThemeData(color: AppColors.darkTextPrimary),
       actionsIconTheme: IconThemeData(color: AppColors.darkTextPrimary),
     ),
@@ -242,12 +243,9 @@ ThemeData getDarkApplicationTheme() {
           ),
         ),
         side: WidgetStatePropertyAll(
-          BorderSide(
-              color: AppColors.darkBorder,
-              width: 1.0), // لون الحدود في الوضع الداكن
+          BorderSide(color: AppColors.darkBorder, width: 1.0),
         ),
-        foregroundColor:
-            WidgetStatePropertyAll(AppColors.darkTextPrimary), // لون النص
+        foregroundColor: WidgetStatePropertyAll(AppColors.darkTextPrimary),
       ),
     ),
 
@@ -259,24 +257,20 @@ ThemeData getDarkApplicationTheme() {
             borderRadius: BorderRadius.all(Radius.circular(AppSize.s12)),
           ),
         ),
-        foregroundColor: WidgetStatePropertyAll(AppColors.primary), // لون النص
+        foregroundColor: WidgetStatePropertyAll(AppColors.primary),
       ),
     ),
 
     //** Input Decoration Theme **/
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: AppColors.darkBackground, // خلفية حقول الإدخال في الوضع الداكن
+      fillColor: AppColors.darkBackground,
       contentPadding: REdgeInsets.symmetric(
           vertical: AppPadding.p15, horizontal: AppPadding.p10),
-      labelStyle: getRegularStyle(
-          color: AppColors.darkTextSecondary), // لون الـ label في الوضع الداكن
-      hintStyle: getRegularStyle(
-          color: AppColors.darkTextSecondary), // لون الـ hint في الوضع الداكن
-      prefixIconColor:
-          AppColors.darkTextSecondary, // لون أيقونة الـ prefix في الوضع الداكن
-      suffixIconColor:
-          AppColors.darkTextSecondary, // لون أيقونة الـ suffix في الوضع الداكن
+      labelStyle: getRegularStyle(color: AppColors.darkTextSecondary),
+      hintStyle: getRegularStyle(color: AppColors.darkTextSecondary),
+      prefixIconColor: AppColors.darkTextSecondary,
+      suffixIconColor: AppColors.darkTextSecondary,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(AppSize.s10),
         borderSide: BorderSide.none,

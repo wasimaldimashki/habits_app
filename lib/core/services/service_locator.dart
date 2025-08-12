@@ -5,6 +5,7 @@ import 'package:habits_app/features/home/cubits/profile_header_cubit/profile_hea
 import 'package:habits_app/features/home/cubits/statistics_cubit/statistics_cubit.dart';
 import 'package:habits_app/features/models/habit_model.dart';
 import 'package:habits_app/features/models/user_model.dart';
+import 'package:habits_app/features/update_profile/cubit/update_profile_cubit.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:habits_app/core/cache/hive_adapters.dart';
@@ -35,8 +36,9 @@ Future<void> setupServiceLocator() async {
     },
   );
   sl.registerLazySingleton<CacheService>(
-    () => CacheService(sharedPreferences: sl()),
-  );
+      () => CacheService(sharedPreferences: sl()));
+
   sl.registerFactory<StatisticsCubit>(() => StatisticsCubit());
   sl.registerFactory<ProfileHeaderCubit>(() => ProfileHeaderCubit());
+  sl.registerFactory<UpdateProfileCubit>(() => UpdateProfileCubit());
 }

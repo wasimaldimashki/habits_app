@@ -12,6 +12,7 @@ import 'package:habits_app/features/signin/cubit/signin_cubit.dart';
 import 'package:habits_app/features/signin/siginin_screen.dart';
 import 'package:habits_app/features/start/onboarding_screen.dart';
 import 'package:habits_app/features/start/splash_screen.dart';
+import 'package:habits_app/features/update_profile/update_profile.dart';
 import 'package:habits_app/routes/app_routes.dart';
 import 'package:habits_app/routes/unknown_page.dart';
 
@@ -52,9 +53,6 @@ class AppRouter {
             BlocProvider(
               create: (context) => HabitScreenCubit()..loadAllHabits(),
             ),
-            // BlocProvider(
-            //   create: (context) => StatisticsCubit()..loadStatistics(),
-            // ),
           ],
           child: const HomeScreen(),
         ),
@@ -73,6 +71,12 @@ class AppRouter {
         name: 'About Us Screen',
         path: AppRoutes.aboutUsScreen,
         builder: (context, state) => const AboutUsScreen(),
+      ),
+      //** Update Profile Screen **/
+      GoRoute(
+        name: 'Update Profile Screen',
+        path: AppRoutes.updateProfileScreen,
+        builder: (context, state) => const UpdateProfileScreen(),
       ),
     ],
     errorPageBuilder: (context, state) => MaterialPage(
