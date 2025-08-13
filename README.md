@@ -1,85 +1,118 @@
-Habits App
-A habit-tracking application that helps you build positive habits and monitor your daily progress. This app aims to simplify the process of habit tracking with a simple and intuitive user interface.
+# Habit Tracker App
 
-Key Features
-Habit Management: Easily add, edit, and delete your habits.
+An elegant and functional Flutter application designed to help users build, track, and maintain positive habits effectively. The app offers a clean user interface and powerful features to support users on their journey towards self-improvement.
 
-Daily Tracking: Log your daily achievements with a single click.
+---
 
-Statistics Analysis: View weekly and monthly progress statistics.
+## ✨ Features
 
-User Profile: Modify your profile details such as username and gender.
+- **Habit Creation & Management**: Easily add, edit, and delete habits with custom names and recurrence rules.
+- **Daily Tracking**: Mark habits as complete for the selected day with a simple tap.
+- **Interactive Calendar**: Visualize your progress and consistency over time with a dynamic calendar that marks days with habits.
+- **Profile Customization**: Personalize your profile with your name and picture.
+- **Light/Dark Mode**: Seamlessly switch between light and dark themes for comfortable viewing.
+- **Local Data Persistence**: Your data is securely stored on your device using Hive, ensuring privacy and offline access.
 
-Dark/Light Mode: Switch between the dark and light themes of the application.
+---
 
-Local Storage: Uses the Hive database to store user and habit data locally.
+## 📲 Download the App
 
-Technologies Used
-Flutter: A UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.
+You can download the latest version of the APK from the following link:
 
-Dart: The programming language used.
+**[Download APK from Google Drive]('[YOUR_GOOGLE_DRIVE_LINK]')**
 
-State Management:
+---
 
-flutter_bloc: For effective and organized application state management.
+## 📂 Project Structure
 
-get_it: For dependency injection.
+The project follows a clean, feature-first architectural pattern to ensure scalability and maintainability.
 
-Local Storage:
-
-hive: A fast, lightweight NoSQL database for local data storage.
-
-shared_preferences: For storing simple data like user preferences.
-
-Other:
-
-flutter_screenutil: To adapt the user interface to different screen sizes.
-
-go_router: For managing navigation within the application.
-
-equatable: For easy comparison of states and objects.
-
-Setup and Running the Project
-To set up and run the project on your machine, follow these steps:
-
-Clone the repository
-
-git clone [URL_HERE]
-cd habits_app
-
-
-Install dependencies
-
-flutter pub get
-
-
-Run the code generator
-Since the project uses Hive, you'll need to run the code generation tool to generate the necessary files.
-
-flutter pub run build_runner build
-
-
-Run the application
-
-flutter run
-
-
-You can also open the project in an IDE like VS Code or Android Studio and run it from there.
-
-Project Structure
+```text
 lib/
-├── core/
-│   ├── cache/          # Local storage services (Hive, SharedPreferences)
-│   ├── services/       # Service locator and other services
+├── core/               # Core utilities (services, constants, extensions)
+│   ├── cache/          # Data persistence (Hive)
+│   ├── services/       # Service locator (GetIt)
 │   └── ...
-├── features/
-│   ├── home/           # Main habits screen
-│   ├── settings/       # Settings and profile screen
-│   ├── models/         # Data models (UserModel, HabitModel)
-│   ├── shared/         # Shared UI components
-│   └── ...
-├── main.dart
-├── ...
+├── features/           # Feature-based modules
+│   ├── home/           # Home screen, calendar, habit list, profile
+│   ├── manage_habit/   # Add, edit, delete habits
+│   ├── models/         # Data models (HabitModel, UserModel)
+│   └── ...             # Other features like onboarding, auth, etc.
+├── main.dart           # App entry point
+└── ...
+```
 
-Contribution
-We welcome your contributions! If you have any suggestions or find any bugs, feel free to open an "issue" or a "pull request" on the repository.
+---
+
+## 🛠️ Technologies & Libraries Used
+
+This project leverages a modern stack of Flutter libraries to deliver a robust and high-quality experience:
+
+- **State Management**: `flutter_bloc` - For predictable and scalable state management.
+- **Database**: `hive` / `hive_flutter` - A lightweight and fast NoSQL database for local storage.
+- **Routing**: `go_router` - For declarative and type-safe navigation.
+- **Dependency Injection**: `get_it` - For service location and decoupling dependencies.
+- **UI Components**: 
+  - `table_calendar`: For the main calendar view.
+  - `flutter_screenutil`: For responsive UI design across different screen sizes.
+  - `google_fonts`: For beautiful and custom typography.
+  - `percent_indicator`: For circular progress indicators.
+- **Utilities**:
+  - `equatable`: To simplify model comparisons.
+  - `intl`: For internationalization and date formatting.
+  - `image_picker`: To select profile pictures.
+
+---
+
+## 🚀 How to Run the Project
+
+To get a local copy up and running, follow these simple steps.
+
+### Prerequisites
+
+- Flutter SDK (version 3.x or higher)
+- Dart SDK
+
+### Installation & Setup
+
+1. **Clone the repository:**
+
+   ```sh
+   git clone https://github.com/wasimaldimashki/habits_app.git
+   ```
+
+2. **Navigate to the project directory:**
+
+   ```sh
+   cd habits_app
+   ```
+
+3. **Install dependencies:**
+
+   ```sh
+   flutter pub get
+   ```
+
+4. **Run the build runner (for Hive models):**
+
+   ```sh
+   flutter pub run build_runner build --delete-conflicting-outputs
+   ```
+
+5. **Run the app:**
+
+   ```sh
+   flutter run
+   ```
+
+---
+
+## 👨‍💻 Developed By
+
+**[Wasim Aldimashki]**
+
+- **GitHub**: `https://github.com/wasimaldimashki`
+- **LinkedIn**: `https://www.linkedin.com/in/wasim-aldimashki-a76993106/`
+- **Facebook**: `https://www.facebook.com/wasim.aldimashki`
+- **WhatsApp**: `https://wa.me/+963991413927`
+- **Instagram**: `https://www.instagram.com/wasim_aldimashki/`

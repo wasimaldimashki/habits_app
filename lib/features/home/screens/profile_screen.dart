@@ -41,15 +41,15 @@ class ProfileScreen extends StatelessWidget {
                         await context.push(AppRoutes.updateProfileScreen);
                       },
                     ),
-                    SizedBox(height: 12.h),
-                    ProfileCardWidget(
-                      title: 'Reset App Data',
-                      icon: Icons.refresh,
-                      onTap: () async {
-                        // await sl.call<CacheService>().clearAllData();
-                        // context.go(AppRoutes.splashScreen);
-                      },
-                    ),
+                    // SizedBox(height: 12.h),
+                    // ProfileCardWidget(
+                    //   title: 'Reset App Data',
+                    //   icon: Icons.refresh,
+                    //   onTap: () async {
+                    //     // await sl.call<CacheService>().clearAllData();
+                    //     // context.go(AppRoutes.splashScreen);
+                    //   },
+                    // ),
                     SizedBox(height: 12.h),
                     ProfileCardWidget(
                       title: 'About Us',
