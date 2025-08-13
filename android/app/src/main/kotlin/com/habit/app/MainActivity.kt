@@ -1,4 +1,4 @@
-package com.example.habits_app
+package com.habit.app
 
 import io.flutter.embedding.android.FlutterActivity
 
