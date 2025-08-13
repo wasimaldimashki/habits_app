@@ -11,7 +11,7 @@ class FloatBtnWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingSpeedDial(
       labelsStyle: getMediumStyle(
-        color: AppColors.getTextPrimaryColor(context),
+        color: Colors.black,
       ),
       openForegroundColor: AppColors.primary.withOpacity(0.9),
       openBackgroundColor: AppColors.accent,
@@ -26,7 +26,6 @@ class FloatBtnWidget extends StatelessWidget {
           onPressed: () async {
             final result = await context.push(AppRoutes.addHabitScreen);
             if (result == true) {
-              // ignore: use_build_context_synchronously
               BlocProvider.of<HabitScreenCubit>(context).loadAllHabits();
             }
           },
@@ -37,7 +36,10 @@ class FloatBtnWidget extends StatelessWidget {
           backgroundColor: AppColors.primary.withOpacity(0.9),
           label: 'Manage Habits',
           onPressed: () async {
-            // TODO:: Manage habit logic
+            final result = await context.push(AppRoutes.manageHabitScreen);
+            if (result == true) {
+              BlocProvider.of<HabitScreenCubit>(context).loadAllHabits();
+            }
           },
         ),
       ],

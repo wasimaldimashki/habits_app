@@ -8,6 +8,7 @@ import 'package:habits_app/features/add_habit/cubit/add_habit_cubit.dart';
 import 'package:habits_app/features/add_habit/screens/add_habit.dart';
 import 'package:habits_app/features/home/cubits/habit_screen_cubit/habit_screen_cubit.dart';
 import 'package:habits_app/features/home/home_screen.dart';
+import 'package:habits_app/features/manage_habit/screens/manage_habit.dart';
 import 'package:habits_app/features/signin/cubit/signin_cubit.dart';
 import 'package:habits_app/features/signin/siginin_screen.dart';
 import 'package:habits_app/features/start/onboarding_screen.dart';
@@ -77,6 +78,12 @@ class AppRouter {
         name: 'Update Profile Screen',
         path: AppRoutes.updateProfileScreen,
         builder: (context, state) => const UpdateProfileScreen(),
+      ),
+      //** Manage Habit Screen **/
+      GoRoute(
+        name: 'Manage Habit Screen',
+        path: AppRoutes.manageHabitScreen,
+        builder: (context, state) => const ManageHabitScreen(),
       ),
     ],
     errorPageBuilder: (context, state) => MaterialPage(

@@ -1,8 +1,10 @@
 import 'package:get_it/get_it.dart';
 import 'package:habits_app/core/cache/hive_service.dart';
 import 'package:habits_app/core/cache/cache_service.dart';
+import 'package:habits_app/features/home/cubits/habit_screen_cubit/habit_screen_cubit.dart';
 import 'package:habits_app/features/home/cubits/profile_header_cubit/profile_header_cubit.dart';
 import 'package:habits_app/features/home/cubits/statistics_cubit/statistics_cubit.dart';
+import 'package:habits_app/features/manage_habit/cubit/manage_habit_cubit.dart';
 import 'package:habits_app/features/models/habit_model.dart';
 import 'package:habits_app/features/models/user_model.dart';
 import 'package:habits_app/features/update_profile/cubit/update_profile_cubit.dart';
@@ -39,6 +41,9 @@ Future<void> setupServiceLocator() async {
       () => CacheService(sharedPreferences: sl()));
 
   sl.registerFactory<StatisticsCubit>(() => StatisticsCubit());
+  sl.registerFactory<HabitScreenCubit>(() => HabitScreenCubit());
   sl.registerFactory<ProfileHeaderCubit>(() => ProfileHeaderCubit());
   sl.registerFactory<UpdateProfileCubit>(() => UpdateProfileCubit());
+  sl.registerFactory<ManageHabitCubit>(
+      () => ManageHabitCubit(sl<GenericHiveService<HabitModel>>()));
 }

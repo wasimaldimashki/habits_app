@@ -32,6 +32,7 @@ class AppSize {
   static const double s1 = 1.0;
   static const double s2 = 2.0;
   static const double s4 = 4.0;
+  static const double s6 = 6.0;
   static const double s8 = 8.0;
   static const double s10 = 10.0;
   static const double s12 = 12.0;
@@ -50,6 +51,7 @@ class AppSize {
   static const double s100 = 100.0;
   static const double s120 = 120.0;
   static const double s150 = 150.0;
+  static const double s340 = 340.0;
 }
 
 const double defaultRadius = 10.0;

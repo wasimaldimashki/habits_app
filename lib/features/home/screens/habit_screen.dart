@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
 import 'package:habits_app/features/home/cubits/habit_screen_cubit/habit_screen_cubit.dart';
-import 'package:habits_app/features/home/widgets/habit_screen/calendar_horizontal_widget.dart';
+import 'package:habits_app/features/home/widgets/habit_screen/calendar_widget.dart';
 import 'package:habits_app/features/home/widgets/habit_screen/float_btn_widget.dart';
 import 'package:habits_app/features/home/widgets/habit_screen/habit_list_view_widget.dart';
 
@@ -14,6 +14,7 @@ class HabitScreen extends StatelessWidget {
       body: BlocBuilder<HabitScreenCubit, HabitScreenState>(
         builder: (context, state) {
           final cubit = BlocProvider.of<HabitScreenCubit>(context);
+
           return SingleChildScrollView(
             padding: REdgeInsets.symmetric(horizontal: AppPadding.p24),
             child: Column(
@@ -40,11 +41,14 @@ class HabitScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: AppSize.s30.h),
-                // Horizontal Date Row using CalendarHorizontalWidget
-                CalendarHorizontalWidget(
+                CalendarWidget(
                   selectedDate: state.selectedDate,
                   onDaySelected: (date) => cubit.onDaySelected(date),
+                  onToggleFormat: () => cubit.toggleCalendarFormat(),
+                  calendarFormat: state.calendarFormat,
+                  markedDates: state.markedDates,
                 ),
+                SizedBox(height: AppSize.s16.h),
                 Text(
                   'Habits',
                   style: getSemiBoldStyle(
@@ -53,7 +57,6 @@ class HabitScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: AppSize.s24.h),
-                // Display habits or a message
                 if (state.habitsForSelectedDay.isEmpty)
                   Center(
                     child: Column(
@@ -83,7 +86,6 @@ class HabitScreen extends StatelessWidget {
                     ),
                   )
                 else
-                  // Habit list view with drag and drop
                   HabitListViewWidget(
                     habits: state.habitsForSelectedDay,
                     onReorder: cubit.reorderHabits,

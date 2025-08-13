@@ -1,7 +1,10 @@
 import 'package:habits_app/features/models/habit_model.dart';
-import 'package:hive/hive.dart';
+import 'dart:async';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class GenericHiveService<T> {
+  final _itemsStreamController = StreamController<List<T>>.broadcast();
+  Stream<List<T>> get itemsStream => _itemsStreamController.stream;
   final String boxName;
   Box<T>? _box;
 
@@ -28,6 +31,7 @@ class GenericHiveService<T> {
     final dynamic typedItem = item;
     if (typedItem is HabitModel) {
       await box.put(typedItem.id, item);
+      _updateStream();
     } else {
       throw Exception('Unsupported type for add method.');
     }
@@ -35,6 +39,7 @@ class GenericHiveService<T> {
 
   Future<void> saveItem(String key, T item) async {
     await box.put(key, item);
+    _updateStream();
   }
 
   T? get(String key) {
@@ -43,17 +48,23 @@ class GenericHiveService<T> {
 
   Future<void> delete(String key) async {
     await box.delete(key);
+    _updateStream();
   }
 
   List<T> getAll() {
     return box.values.toList();
   }
 
-  Future<void> clearAll() async {
+  Future<void> clear() async {
     await box.clear();
+    _updateStream();
   }
 
   bool itemExists(String key) {
     return box.containsKey(key);
+  }
+
+  void _updateStream() {
+    _itemsStreamController.add(box.values.toList());
   }
 }

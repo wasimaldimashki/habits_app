@@ -1,28 +1,49 @@
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:habits_app/core/cache/hive_service.dart';
 import 'package:habits_app/core/services/service_locator.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:habits_app/features/models/habit_model.dart';
 part 'habit_screen_state.dart';
 
 class HabitScreenCubit extends Cubit<HabitScreenState> {
-  HabitScreenCubit() : super(HabitScreenInitial());
-
   final GenericHiveService<HabitModel> _habitService = sl();
+  late final StreamSubscription _habitsSubscription;
+
+  HabitScreenCubit() : super(HabitScreenState.initial()) {
+    _habitsSubscription = _habitService.itemsStream.listen((allHabits) async {
+      await _updateStateWithHabits(allHabits);
+    });
+    // Initial Load
+    loadAllHabits();
+  }
+
+  final DateTime _firstDay = DateTime.now().subtract(const Duration(days: 365));
+  final DateTime _lastDay = DateTime.now().add(const Duration(days: 365));
 
   Future<void> loadAllHabits() async {
+    emit(state.copyWith(status: HabitScreenStatus.loading));
     final allHabits = _habitService.getAll();
-    emit(HabitScreenLoaded(
+    await _updateStateWithHabits(allHabits);
+  }
+
+  Future<void> _updateStateWithHabits(List<HabitModel> allHabits) async {
+    final marked = await _computeMarkedDates(allHabits, _firstDay, _lastDay);
+    final habitsForSelectedDay =
+        _getHabitsForDate(allHabits, state.selectedDate);
+
+    emit(state.copyWith(
+      status: HabitScreenStatus.loaded,
       allHabits: allHabits,
-      selectedDate: state.selectedDate,
-      habitsForSelectedDay: _getHabitsForDate(allHabits, state.selectedDate),
+      habitsForSelectedDay: habitsForSelectedDay,
+      markedDates: marked,
     ));
   }
 
   Future<void> onDaySelected(DateTime date) async {
     final habitsForDay = _getHabitsForDate(state.allHabits, date);
-    emit(HabitScreenLoaded(
-      allHabits: state.allHabits,
+    emit(state.copyWith(
       selectedDate: date,
       habitsForSelectedDay: habitsForDay,
     ));
@@ -34,27 +55,41 @@ class HabitScreenCubit extends Cubit<HabitScreenState> {
     updatedCompletedDates[dateKey] = !(updatedCompletedDates[dateKey] ?? false);
 
     final updatedHabit = habit.copyWith(completedDates: updatedCompletedDates);
-    await _habitService.add(updatedHabit); // Assumes add also updates
-    await loadAllHabits();
+    await _habitService.add(updatedHabit);
   }
 
   Future<void> deleteHabit(String id) async {
     await _habitService.delete(id);
-    await loadAllHabits();
   }
 
   void reorderHabits(int oldIndex, int newIndex) {
-    if (newIndex > oldIndex) {
-      newIndex -= 1;
-    }
+    if (newIndex > oldIndex) newIndex -= 1;
     final habits = List<HabitModel>.from(state.habitsForSelectedDay);
     final item = habits.removeAt(oldIndex);
     habits.insert(newIndex, item);
-    emit(HabitScreenLoaded(
-      allHabits: state.allHabits,
-      selectedDate: state.selectedDate,
-      habitsForSelectedDay: habits,
-    ));
+    emit(state.copyWith(habitsForSelectedDay: habits));
+  }
+
+  Future<void> toggleCalendarFormat() async {
+    final newFormat = state.calendarFormat == CalendarFormat.week
+        ? CalendarFormat.month
+        : CalendarFormat.week;
+    emit(state.copyWith(calendarFormat: newFormat));
+  }
+
+  Future<Set<DateTime>> _computeMarkedDates(
+      List<HabitModel> allHabits, DateTime from, DateTime to) async {
+    final marked = <DateTime>{};
+    DateTime current = DateTime(from.year, from.month, from.day);
+    final end = DateTime(to.year, to.month, to.day);
+    while (!current.isAfter(end)) {
+      final matches = _getHabitsForDate(allHabits, current);
+      if (matches.isNotEmpty) {
+        marked.add(DateTime(current.year, current.month, current.day));
+      }
+      current = current.add(const Duration(days: 1));
+    }
+    return marked;
   }
 
   List<HabitModel> _getHabitsForDate(
@@ -81,5 +116,11 @@ class HabitScreenCubit extends Cubit<HabitScreenState> {
           return difference % habit.interval! == 0;
       }
     }).toList();
+  }
+
+  @override
+  Future<void> close() {
+    _habitsSubscription.cancel();
+    return super.close();
   }
 }

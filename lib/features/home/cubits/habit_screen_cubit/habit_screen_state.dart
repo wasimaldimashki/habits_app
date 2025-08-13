@@ -1,55 +1,58 @@
 part of 'habit_screen_cubit.dart';
 
-abstract class HabitScreenState extends Equatable {
+enum HabitScreenStatus { initial, loading, loaded, error }
+
+class HabitScreenState extends Equatable {
+  final HabitScreenStatus status;
   final List<HabitModel> allHabits;
-  final List<HabitModel> habitsForSelectedDay;
   final DateTime selectedDate;
+  final List<HabitModel> habitsForSelectedDay;
+  final CalendarFormat calendarFormat;
+  final Set<DateTime> markedDates;
 
   const HabitScreenState({
-    this.allHabits = const [],
-    this.habitsForSelectedDay = const [],
+    required this.status,
+    required this.allHabits,
     required this.selectedDate,
+    required this.habitsForSelectedDay,
+    required this.calendarFormat,
+    required this.markedDates,
   });
 
-  @override
-  List<Object?> get props => [
-        allHabits,
-        habitsForSelectedDay,
-        selectedDate,
-      ];
-}
+  factory HabitScreenState.initial() => HabitScreenState(
+        status: HabitScreenStatus.initial,
+        allHabits: const [],
+        selectedDate: DateTime.now(),
+        habitsForSelectedDay: const [],
+        calendarFormat: CalendarFormat.week,
+        markedDates: const {},
+      );
 
-class HabitScreenInitial extends HabitScreenState {
-  HabitScreenInitial() : super(selectedDate: DateTime.now());
-}
-
-class HabitScreenLoading extends HabitScreenState {
-  const HabitScreenLoading({required super.selectedDate});
-}
-
-class HabitScreenLoaded extends HabitScreenState {
-  const HabitScreenLoaded({
-    required super.allHabits,
-    required super.selectedDate,
-    required super.habitsForSelectedDay,
-  });
-}
-
-class HabitScreenError extends HabitScreenState {
-  final String errorMessage;
-
-  HabitScreenError({
-    required this.errorMessage,
-    super.allHabits,
-    super.habitsForSelectedDay,
+  HabitScreenState copyWith({
+    HabitScreenStatus? status,
+    List<HabitModel>? allHabits,
     DateTime? selectedDate,
-  }) : super(
-          selectedDate: selectedDate ?? DateTime.now(),
-        );
+    List<HabitModel>? habitsForSelectedDay,
+    CalendarFormat? calendarFormat,
+    Set<DateTime>? markedDates,
+  }) {
+    return HabitScreenState(
+      status: status ?? this.status,
+      allHabits: allHabits ?? this.allHabits,
+      selectedDate: selectedDate ?? this.selectedDate,
+      habitsForSelectedDay: habitsForSelectedDay ?? this.habitsForSelectedDay,
+      calendarFormat: calendarFormat ?? this.calendarFormat,
+      markedDates: markedDates ?? this.markedDates,
+    );
+  }
 
   @override
   List<Object?> get props => [
-        ...super.props,
-        errorMessage,
+        status,
+        allHabits,
+        selectedDate,
+        habitsForSelectedDay,
+        calendarFormat,
+        markedDates,
       ];
 }
