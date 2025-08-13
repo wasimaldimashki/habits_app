@@ -117,12 +117,11 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 : const EdgeInsets.all(12),
                           ),
                           child: _isLastPage
-                              ? Text(
-                                  S.of(context).get_started,
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                )
+                              ? Text(S.of(context).get_started,
+                                  style: getSemiBoldStyle(
+                                      color: AppColors.getTextPrimaryColor(
+                                          context),
+                                      fontSize: FontSizeManager.s16))
                               : const Icon(Icons.arrow_forward),
                         ),
                       ],
@@ -155,19 +154,18 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 28,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
+            style: getSemiBoldStyle(
+              color: AppColors.getTextPrimaryColor(context),
+              fontSize: FontSizeManager.s28,
             ),
           ),
           const SizedBox(height: 15),
           Text(
             description,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 16,
-              color: Colors.black54,
+            style: getRegularStyle(
+              color: AppColors.getTextSecondaryColor(context),
+              fontSize: FontSizeManager.s16,
             ),
           ),
         ],

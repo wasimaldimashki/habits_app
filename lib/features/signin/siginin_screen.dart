@@ -16,10 +16,8 @@ class SigininScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.getBackgroundColor(context),
         body: BlocConsumer<SigninCubit, SigninState>(
-          // The listener handles side effects like navigation.
           listener: (context, state) {
             if (state is SigninSuccess) {
-              // When the cubit emits a success state, navigate to the home screen.
               context.go(AppRoutes.homeScreen);
             }
             if (state is SigninError) {
@@ -28,7 +26,6 @@ class SigininScreen extends StatelessWidget {
               );
             }
           },
-          // The builder handles building the UI based on the current state.
           builder: (context, state) {
             final cubit = BlocProvider.of<SigninCubit>(context);
             final nameController = TextEditingController(text: state.userName);
@@ -64,7 +61,7 @@ class SigininScreen extends StatelessWidget {
                     SizedBox(height: AppSize.s40.h),
                     // Text field for the user's name
                     CustomFormTextField(
-                      controller: nameController,
+                      initialValue: state.userName,
                       onChanged: (value) {
                         cubit.updateName(value);
                       },

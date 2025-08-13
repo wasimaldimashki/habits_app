@@ -1,9 +1,13 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habits_app/core/cache/cache_service.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
 import 'package:habits_app/core/services/service_locator.dart';
 import 'package:habits_app/features/home/cubits/profile_header_cubit/profile_header_cubit.dart';
 import 'package:habits_app/features/home/widgets/profile_screen/profile_card_widget.dart';
+import 'package:habits_app/core/cache/hive_service.dart';
 import 'package:habits_app/features/home/widgets/profile_screen/profile_header.dart';
+import 'package:habits_app/features/models/habit_model.dart';
+import 'package:habits_app/features/models/user_model.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -41,15 +45,45 @@ class ProfileScreen extends StatelessWidget {
                         await context.push(AppRoutes.updateProfileScreen);
                       },
                     ),
-                    // SizedBox(height: 12.h),
-                    // ProfileCardWidget(
-                    //   title: 'Reset App Data',
-                    //   icon: Icons.refresh,
-                    //   onTap: () async {
-                    //     // await sl.call<CacheService>().clearAllData();
-                    //     // context.go(AppRoutes.splashScreen);
-                    //   },
-                    // ),
+                    SizedBox(height: 12.h),
+                    ProfileCardWidget(
+                      title: 'Reset App Data',
+                      icon: Icons.refresh,
+                      onTap: () async {
+                        await showDialog(
+                          context: context,
+                          builder: (BuildContext dialogContext) {
+                            return AlertDialog(
+                              title: const Text('Confirm Reset'),
+                              content: const Text(
+                                  'Are you sure you want to reset all app data? This action cannot be undone.',),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text('Cancel'),
+                                  onPressed: () {
+                                    Navigator.of(dialogContext).pop(); // Close the dialog
+                                  },
+                                ),
+                                TextButton(
+                                  child: const Text('Reset'),
+                                  onPressed: () async {
+                                    Navigator.of(dialogContext).pop(); // Close the dialog
+                                    // Clear all data
+                                    await sl<GenericHiveService<UserModel>>().clear();
+                                    await sl<GenericHiveService<HabitModel>>().clear();
+                                    await sl<CacheService>().clearAllData();
+                                    // Navigate to splash screen
+                                    if (context.mounted) {
+                                      context.go(AppRoutes.splashScreen);
+                                    }
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                    ),
                     SizedBox(height: 12.h),
                     ProfileCardWidget(
                       title: 'About Us',
