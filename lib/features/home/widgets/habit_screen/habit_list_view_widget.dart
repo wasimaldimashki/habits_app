@@ -29,8 +29,6 @@ class HabitListViewWidget extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       onReorder: onReorder,
       children: habits.map((habit) {
-        // Here's the fix: we will assume HabitModel has a method 'isCompletedForDate'
-        // which we will add in the HabitModel file itself.
         final isCompleted = habit.isCompletedForDate(selectedDate);
         return Dismissible(
           key: ValueKey(habit.id),
@@ -88,13 +86,13 @@ class HabitListViewWidget extends StatelessWidget {
                     ),
                     onPressed: () => onToggleCompletion(habit),
                   ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.delete,
-                      color: AppColors.error,
-                    ),
-                    onPressed: () => onDelete(habit.id),
-                  ),
+                  // IconButton(
+                  //   icon: const Icon(
+                  //     Icons.delete,
+                  //     color: AppColors.error,
+                  //   ),
+                  //   onPressed: () => onDelete(habit.id),
+                  // ),
                 ],
               ),
             ),

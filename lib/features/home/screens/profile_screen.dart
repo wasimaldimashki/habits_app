@@ -56,23 +56,24 @@ class ProfileScreen extends StatelessWidget {
                             return AlertDialog(
                               title: const Text('Confirm Reset'),
                               content: const Text(
-                                  'Are you sure you want to reset all app data? This action cannot be undone.',),
+                                'Are you sure you want to reset all app data? This action cannot be undone.',
+                              ),
                               actions: <Widget>[
                                 TextButton(
                                   child: const Text('Cancel'),
                                   onPressed: () {
-                                    Navigator.of(dialogContext).pop(); // Close the dialog
+                                    Navigator.of(dialogContext).pop();
                                   },
                                 ),
                                 TextButton(
                                   child: const Text('Reset'),
                                   onPressed: () async {
-                                    Navigator.of(dialogContext).pop(); // Close the dialog
-                                    // Clear all data
-                                    await sl<GenericHiveService<UserModel>>().clear();
-                                    await sl<GenericHiveService<HabitModel>>().clear();
+                                    Navigator.of(dialogContext).pop();
+                                    await sl<GenericHiveService<UserModel>>()
+                                        .clear();
+                                    await sl<GenericHiveService<HabitModel>>()
+                                        .clear();
                                     await sl<CacheService>().clearAllData();
-                                    // Navigate to splash screen
                                     if (context.mounted) {
                                       context.go(AppRoutes.splashScreen);
                                     }

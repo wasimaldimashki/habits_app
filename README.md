@@ -19,7 +19,7 @@ An elegant and functional Flutter application designed to help users build, trac
 
 You can download the latest version of the APK from the following link:
 
-**[Download APK from Google Drive](https://drive.google.com/file/d/1Ah4LOpJP3Cu6Z4TyVsc4736HppsodSVt/view?usp=sharing)**
+**[Download APK from Google Drive](https://drive.google.com/file/d/1uOokDPpuEdJvhjIYJNQwSEpcWokhm_7-/view?usp=sharing)**
 
 ---
 

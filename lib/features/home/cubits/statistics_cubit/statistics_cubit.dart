@@ -20,7 +20,7 @@ class StatisticsCubit extends Cubit<StatisticsState> {
     try {
       final habits = _habitService.getAll();
       if (habits.isEmpty) {
-        emit(StatisticsLoaded(
+        emit(const StatisticsLoaded(
           completionRate: 0.0,
           completedDaysLast7: 0,
           completedDaysLast30: 0,
@@ -52,24 +52,32 @@ class StatisticsCubit extends Cubit<StatisticsState> {
     }
   }
 
+  /// Calculates the overall completion rate of all habits.
+  /// Uses `fold` to sum the completed and possible days in a single pass.
   double _calculateCompletionRate(List<HabitModel> habits) {
-    int totalCompletedDays = 0;
-    int totalPossibleDays = 0;
+    if (habits.isEmpty) return 0.0;
 
-    for (var habit in habits) {
-      // Calculate total completed days for this habit
-      totalCompletedDays += habit.completedDates.length;
+    // Using fold to calculate totalCompletedDays and totalPossibleDays
+    final completionData = habits.fold<Map<String, int>>(
+      {'completed': 0, 'possible': 0},
+      (previousValue, habit) {
+        return {
+          'completed':
+              previousValue['completed']! + habit.completedDates.length,
+          'possible':
+              previousValue['possible']! + _calculatePossibleDays(habit),
+        };
+      },
+    );
 
-      // Calculate total possible days for this habit since its creation
-      totalPossibleDays += _calculatePossibleDays(habit);
-    }
+    final int totalCompletedDays = completionData['completed']!;
+    final int totalPossibleDays = completionData['possible']!;
 
-    if (totalPossibleDays == 0) {
-      return 0.0;
-    }
-    return totalCompletedDays / totalPossibleDays;
+    return totalPossibleDays > 0 ? totalCompletedDays / totalPossibleDays : 0.0;
   }
 
+  /// Calculates the total possible days for a habit since its creation.
+  /// The while loop is the most readable approach for this stateful calculation.
   int _calculatePossibleDays(HabitModel habit) {
     final now = DateTime.now();
     int count = 0;
@@ -83,7 +91,6 @@ class StatisticsCubit extends Cubit<StatisticsState> {
           count++;
         }
       } else if (habit.recurrenceType == HabitRecurrenceType.everyXDays) {
-        // For 'every X days', we check if the difference in days is a multiple of the interval.
         if (habit.interval != null && habit.interval! > 0) {
           if ((isSameDay(date, habit.creationDate) ||
               date.difference(habit.creationDate).inDays % habit.interval! ==
@@ -97,72 +104,65 @@ class StatisticsCubit extends Cubit<StatisticsState> {
     return count;
   }
 
+  /// Calculates the number of completed days within a specified period.
+  /// Uses `expand` and `where` to process the dates more efficiently.
   int _calculateCompletedDays(List<HabitModel> habits, {required int days}) {
-    int completedCount = 0;
     final now = DateTime.now();
     final cutoffDate = now.subtract(Duration(days: days));
 
-    for (var habit in habits) {
-      // Corrected the loop to handle DateTime objects directly
-      for (var dateString in habit.completedDates.keys) {
-        final date = DateTime.parse(dateString);
-        if (date.isAfter(cutoffDate) &&
-            (date.isBefore(now) || isSameDay(date, now))) {
-          completedCount++;
-        }
-      }
-    }
-    return completedCount;
+    // Flatten the list of all completed dates into a single iterable
+    final allCompletedDates =
+        habits.expand((habit) => habit.completedDates.keys);
+
+    // Filter and count the dates that fall within the specified period
+    return allCompletedDates.where((dateString) {
+      final date = DateTime.parse(dateString);
+      return date.isAfter(cutoffDate) &&
+          (date.isBefore(now) || isSameDay(date, now));
+    }).length;
   }
 
-  // New logic to calculate the longest streak of any habit
+  /// Calculates the strike across all habits.
+  /// Uses `map` to find the strike for each habit, then `fold` to find the maximum.
   int _calculateLongestStreak(List<HabitModel> habits) {
-    int maxGlobalStreak = 0;
-
-    for (var habit in habits) {
-      if (habit.completedDates.isEmpty) continue;
-
-      // Parse and sort dates to easily check for consecutive days
-      final sortedDates = habit.completedDates.keys
-          .map((e) => DateTime.parse(e))
-          .toList()
-        ..sort();
-
-      int currentStreak = 0;
-      int maxHabitStreak = 0;
-
-      for (int i = 0; i < sortedDates.length; i++) {
-        // If it's the first date or not consecutive, start a new streak
-        if (i == 0 ||
-            !isSameDay(sortedDates[i],
-                sortedDates[i - 1].add(const Duration(days: 1)))) {
-          currentStreak = 1;
-        } else {
-          // If it is consecutive, increment the streak
-          currentStreak++;
-        }
-        // Update the maximum streak for this specific habit
-        maxHabitStreak = max(maxHabitStreak, currentStreak);
-      }
-      // Update the overall maximum streak
-      maxGlobalStreak = max(maxGlobalStreak, maxHabitStreak);
-    }
-    return maxGlobalStreak;
+    if (habits.isEmpty) return 0;
+    return habits
+        .map(_calculateLongestStreakForHabit)
+        .fold(0, (a, b) => max(a, b));
   }
 
-  // New logic to calculate the number of habits completed today
-  int _calculateHabitsCompletedToday(List<HabitModel> habits) {
-    int completedTodayCount = 0;
-    final today = DateTime.now();
+  /// Helper function to calculate the strike for a single habit.
+  int _calculateLongestStreakForHabit(HabitModel habit) {
+    if (habit.completedDates.isEmpty) return 0;
 
-    for (var habit in habits) {
-      // Check if any of the completed dates for this habit matches today's date
-      final isCompletedToday = habit.completedDates.keys
-          .any((dateString) => isSameDay(DateTime.parse(dateString), today));
-      if (isCompletedToday) {
-        completedTodayCount++;
+    final sortedDates = habit.completedDates.keys
+        .map((e) => DateTime.parse(e))
+        .toList()
+      ..sort();
+
+    int currentStreak = 0;
+    int maxHabitStreak = 0;
+
+    for (int i = 0; i < sortedDates.length; i++) {
+      if (i == 0 ||
+          !isSameDay(sortedDates[i],
+              sortedDates[i - 1].add(const Duration(days: 1)))) {
+        currentStreak = 1;
+      } else {
+        currentStreak++;
       }
+      maxHabitStreak = max(maxHabitStreak, currentStreak);
     }
-    return completedTodayCount;
+    return maxHabitStreak;
+  }
+
+  /// Calculates the number of habits completed today.
+  /// Uses `where` to filter habits and `any` to check for completion today.
+  int _calculateHabitsCompletedToday(List<HabitModel> habits) {
+    final today = DateTime.now();
+    return habits
+        .where((habit) => habit.completedDates.keys
+            .any((dateString) => isSameDay(DateTime.parse(dateString), today)))
+        .length;
   }
 }

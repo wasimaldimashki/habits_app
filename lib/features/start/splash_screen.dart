@@ -18,7 +18,6 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  // Get the Hive service for UserModel from the service locator
   final GenericHiveService<UserModel> _userService =
       sl<GenericHiveService<UserModel>>();
   @override

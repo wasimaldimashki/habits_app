@@ -42,7 +42,6 @@ class AboutUsScreen extends StatelessWidget {
                   .fade(duration: 800.ms)
                   .scale(duration: 800.ms, curve: Curves.easeOut),
               SizedBox(height: 20.h),
-              // Animated developer name
               Text(
                 _developerName,
                 style: getSemiBoldStyle(

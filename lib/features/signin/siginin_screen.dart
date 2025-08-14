@@ -10,7 +10,6 @@ class SigininScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // We use BlocProvider to create and manage the SigninCubit's lifecycle.
     return BlocProvider(
       create: (context) => SigninCubit(),
       child: Scaffold(
@@ -59,7 +58,6 @@ class SigininScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: AppSize.s40.h),
-                    // Text field for the user's name
                     CustomFormTextField(
                       initialValue: state.userName,
                       onChanged: (value) {
@@ -76,9 +74,7 @@ class SigininScreen extends StatelessWidget {
                       autofillHints: [AutofillHints.name],
                       keyboardType: TextInputType.name,
                     ),
-
                     SizedBox(height: AppSize.s24.h),
-                    // Gender selection buttons
                     Text(
                       'Select your Gender',
                       style: getSemiBoldStyle(
@@ -153,7 +149,6 @@ class SigininScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: AppSize.s40.h),
-                    // Button to save data and proceed
                     CustomButtonWidget(
                       borederRadius: defaultRadius,
                       title: 'Continue',

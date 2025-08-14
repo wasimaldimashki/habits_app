@@ -12,7 +12,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  // Current index for the navigation bar
   int _selectedItemPosition = 0;
   final List<Widget> _pages = [
     const HabitScreen(),

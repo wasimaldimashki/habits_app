@@ -26,11 +26,9 @@ class AddHabitScreen extends StatelessWidget {
       body: BlocConsumer<AddHabitCubit, AddHabitState>(
         listener: (context, state) {
           if (state is AddHabitSuccess) {
-            // Navigate back after successful habit creation
             context.pop(true);
           }
           if (state is AddHabitError) {
-            // Show a snackbar with the error message
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(state.errorMessage)),
             );
@@ -55,7 +53,6 @@ class AddHabitScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: AppSize.s24.h),
-                  // Placeholder for the illustration
                   Center(
                     child: Image.asset(
                       ImageApplication.addHabit,
@@ -64,7 +61,6 @@ class AddHabitScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: AppSize.s24.h),
-                  // Habit Name Input
                   Text(
                     'Habit Name',
                     style: getSemiBoldStyle(
@@ -93,7 +89,6 @@ class AddHabitScreen extends StatelessWidget {
                     counterText: '${state.habitDescription?.length ?? 0}/100',
                   ),
                   SizedBox(height: AppSize.s24.h),
-                  // Recurrence Type Selection
                   Text(
                     'Repeat Days',
                     style: getSemiBoldStyle(
@@ -109,7 +104,6 @@ class AddHabitScreen extends StatelessWidget {
                   if (state.recurrenceType == HabitRecurrenceType.everyXDays)
                     EveryXDaysSelector(state: state, cubit: cubit),
                   SizedBox(height: AppSize.s40.h),
-                  // Submit Button
                   CustomButtonWidget(
                     borederRadius: defaultRadius,
                     title: S.of(context).submit,

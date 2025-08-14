@@ -69,13 +69,13 @@ class DateItem extends StatelessWidget {
                 fit: BoxFit.scaleDown,
                 child: Text(
                   [
-                    'Mon',
-                    'Tue',
-                    'Wed',
-                    'Thu',
-                    'Fri',
-                    'Sat',
-                    'Sun'
+                    S.of(context).mon,
+                    S.of(context).tue,
+                    S.of(context).wed,
+                    S.of(context).thu,
+                    S.of(context).fri,
+                    S.of(context).sat,
+                    S.of(context).sun,
                   ][day.weekday - 1],
                   style: getRegularStyle(
                     color: textColor.withOpacity(0.8),

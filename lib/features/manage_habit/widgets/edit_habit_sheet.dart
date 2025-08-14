@@ -6,15 +6,25 @@ import 'package:habits_app/features/models/habit_model.dart';
 import 'package:habits_app/features/shared/fields_widgets/custom_text_field.dart';
 
 void showEditHabitSheet(BuildContext context, HabitModel habit) {
+  final TextEditingController nameController =
+      TextEditingController(text: habit.name);
+  final TextEditingController descriptionController =
+      TextEditingController(text: habit.description);
+
   showModalBottomSheet(
     backgroundColor: AppColors.getBackgroundColor(context),
     context: context,
     isScrollControlled: true,
     builder: (ctx) => BlocProvider.value(
       value: BlocProvider.of<ManageHabitCubit>(context),
-      child: EditHabitSheet(habit: habit),
+      child: EditHabitSheet(
+        habit: habit,
+      ),
     ),
-  );
+  ).whenComplete(() {
+    nameController.dispose();
+    descriptionController.dispose();
+  });
 }
 
 class EditHabitSheet extends StatefulWidget {
@@ -27,27 +37,29 @@ class EditHabitSheet extends StatefulWidget {
 
 class _EditHabitSheetState extends State<EditHabitSheet> {
   late final TextEditingController _nameController;
+  late final TextEditingController _descriptionController;
 
   @override
   void initState() {
     super.initState();
     _nameController = TextEditingController(text: widget.habit.name);
+    _descriptionController =
+        TextEditingController(text: widget.habit.description);
   }
 
   @override
   void dispose() {
     _nameController.dispose();
+    _descriptionController.dispose();
     super.dispose();
   }
 
   void _saveChanges() {
-    if (_nameController.text.trim().isEmpty) {
-      return;
-    }
-    final updatedHabit = widget.habit.copyWith(
-      name: _nameController.text.trim(),
-    );
-    context.read<ManageHabitCubit>().updateHabit(updatedHabit);
+    context.read<ManageHabitCubit>().editHabit(
+          habitId: widget.habit.id,
+          newName: _nameController.text,
+          newDescription: _descriptionController.text,
+        );
     Navigator.of(context).pop();
   }
 
@@ -75,6 +87,12 @@ class _EditHabitSheetState extends State<EditHabitSheet> {
           CustomFormTextField(
             nameLabel: 'Habit Name',
             controller: _nameController,
+          ),
+          SizedBox(height: AppSize.s16.h),
+          CustomFormTextField(
+            nameLabel: 'Description',
+            controller: _descriptionController,
+            maxLines: 3,
           ),
           SizedBox(height: AppSize.s24.h),
           SizedBox(

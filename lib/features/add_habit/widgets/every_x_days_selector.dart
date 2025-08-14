@@ -30,7 +30,7 @@ class EveryXDaysSelector extends StatelessWidget {
           ),
           onChanged: (value) {
             if (value.isNotEmpty) {
-              // cubit.updateEveryXDaysInterval(int.tryParse(value) ?? 1);
+              cubit.updateEveryXDaysInterval(int.tryParse(value) ?? 1);
             }
           },
         ),
