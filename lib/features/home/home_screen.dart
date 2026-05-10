@@ -46,18 +46,18 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt_rounded),
-            label: 'Habits',
-            tooltip: 'Habits',
+            label: S.of(context).habits,
+            tooltip: S.of(context).habits,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.timeline),
-            label: 'Statistics',
-            tooltip: 'Statistics',
+            label: S.of(context).statistics,
+            tooltip: S.of(context).statistics,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: 'Profile',
-            tooltip: 'Profile',
+            label: S.of(context).profile,
+            tooltip: S.of(context).profile,
           ),
         ],
       ),

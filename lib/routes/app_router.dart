@@ -36,14 +36,11 @@ class AppRouter {
         path: AppRoutes.onBoardingScreen,
         builder: (context, state) => const OnboardingScreen(),
       ),
-      //** OnBoarding Screen **/
+      //** SignIn Screen **/
       GoRoute(
         name: 'signIn Screen',
         path: AppRoutes.signInScreen,
-        builder: (context, state) => BlocProvider(
-          create: (context) => SigninCubit(),
-          child: const SigininScreen(),
-        ),
+        builder: (context, state) => const SigininScreen(),
       ),
       //** Home Screen **/
       GoRoute(

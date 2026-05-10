@@ -16,19 +16,14 @@ class StatisticsScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           title: Text(
-            'Statistics',
+            S.of(context).statistics,
             style: getSemiBoldStyle(
               color: AppColors.getTextPrimaryColor(context),
               fontSize: FontSizeManager.s20,
             ),
           ),
         ),
-        body: BlocConsumer<StatisticsCubit, StatisticsState>(
-          listener: (context, state) {
-            if (state is StatisticsLoaded) {
-              context.read<StatisticsCubit>().loadStatistics();
-            }
-          },
+        body: BlocBuilder<StatisticsCubit, StatisticsState>(
           builder: (context, state) {
             if (state is StatisticsLoading) {
               return const Center(child: CircularProgressIndicator());
@@ -39,7 +34,7 @@ class StatisticsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Overview',
+                      S.of(context).overview,
                       style: getSemiBoldStyle(
                         color: AppColors.getTextPrimaryColor(context),
                         fontSize: FontSizeManager.s22,
@@ -50,27 +45,27 @@ class StatisticsScreen extends StatelessWidget {
                         completionRate: state.completionRate / 100),
                     SizedBox(height: AppSize.s20.h),
                     StatisticCardWidget(
-                      title: 'Total Habits',
+                      title: S.of(context).total_habits,
                       value: state.totalHabits.toString(),
                     ),
                     SizedBox(height: AppSize.s20.h),
                     StatisticCardWidget(
-                      title: 'Strike',
-                      value: '${state.longestStreak} days',
+                      title: S.of(context).streak,
+                      value: '${state.longestStreak} ${S.of(context).days}',
                     ),
                     SizedBox(height: AppSize.s20.h),
                     StatisticCardWidget(
-                      title: 'Habits Completed Today',
+                      title: S.of(context).habits_completed_today,
                       value: state.habitsCompletedToday.toString(),
                     ),
                     SizedBox(height: AppSize.s20.h),
                     StatisticCardWidget(
-                      title: 'Days Completed (Last 7 Days)',
+                      title: S.of(context).completed_last_7,
                       value: state.completedDaysLast7.toString(),
                     ),
                     SizedBox(height: AppSize.s20.h),
                     StatisticCardWidget(
-                      title: 'Days Completed (Last 30 Days)',
+                      title: S.of(context).completed_last_30,
                       value: state.completedDaysLast30.toString(),
                     ),
                   ],
@@ -79,7 +74,7 @@ class StatisticsScreen extends StatelessWidget {
             } else if (state is StatisticsError) {
               return Center(child: Text(state.errorMessage));
             } else {
-              return const Center(child: Text('No habits yet!'));
+              return Center(child: Text(S.of(context).no_habits_yet));
             }
           },
         ),

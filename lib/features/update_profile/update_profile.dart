@@ -17,19 +17,19 @@ class UpdateProfileScreen extends StatelessWidget {
       create: (context) => sl<UpdateProfileCubit>(),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Update Profile'),
+          title: Text(S.of(context).update_profile),
           backgroundColor: AppColors.getSurfaceColor(context),
         ),
         body: BlocListener<UpdateProfileCubit, UpdateProfileState>(
           listener: (context, state) {
             if (state is UpdateProfileSuccess) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Profile updated successfully!')),
+                SnackBar(content: Text(S.of(context).profile_updated_successfully)),
               );
               Navigator.of(context).pop();
             } else if (state is UpdateProfileError) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error: ${state.errorMessage}')),
+                SnackBar(content: Text('${S.of(context).error}: ${state.errorMessage}')),
               );
             }
           },
@@ -79,8 +79,8 @@ class _UpdateProfileForm extends StatelessWidget {
                     }
                     return null;
                   },
-                  nameLabel: 'Name',
-                  hintText: 'enter name here ..',
+                  nameLabel: S.of(context).name,
+                  hintText: S.of(context).enter_name_hint,
                   autofillHints: [AutofillHints.name],
                   keyboardType: TextInputType.name,
                 ),
@@ -90,7 +90,7 @@ class _UpdateProfileForm extends StatelessWidget {
                   decoration: InputDecoration(
                     fillColor:
                         AppColors.getTextPrimaryColor(context).withAlpha(50),
-                    labelText: 'Gender',
+                    labelText: S.of(context).gender,
                     border: OutlineInputBorder(),
                   ),
                   items: Gender.values.map((Gender value) {
@@ -106,7 +106,7 @@ class _UpdateProfileForm extends StatelessWidget {
                 ),
                 SizedBox(height: 40.h),
                 CustomButtonWidget(
-                  title: 'Update Profile',
+                  title: S.of(context).update_profile_btn,
                   onPressed: () {
                     BlocProvider.of<UpdateProfileCubit>(context)
                         .updateUserProfile();

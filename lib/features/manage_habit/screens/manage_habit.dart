@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
+import 'package:lottie/lottie.dart';
 import 'package:habits_app/core/services/service_locator.dart';
 import 'package:habits_app/features/manage_habit/cubit/manage_habit_cubit.dart';
 import 'package:habits_app/features/manage_habit/widgets/edit_habit_sheet.dart';
@@ -16,7 +17,7 @@ class ManageHabitScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Manage Habits',
+            S.of(context).manage_habits,
           ),
         ),
         body: BlocConsumer<ManageHabitCubit, ManageHabitState>(
@@ -33,12 +34,19 @@ class ManageHabitScreen extends StatelessWidget {
             } else if (state is ManageHabitLoaded) {
               if (state.habits.isEmpty) {
                 return Center(
-                  child: Text(
-                    'No habits to manage.',
-                    style: getRegularStyle(
-                      color: AppColors.getTextSecondaryColor(context),
-                      fontSize: FontSizeManager.s18,
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Lottie.asset('assets/lottie/no_data.json', width: 250.w),
+                      SizedBox(height: 16.h),
+                      Text(
+                        S.of(context).no_habits_to_manage,
+                        style: getRegularStyle(
+                          color: AppColors.getTextSecondaryColor(context),
+                          fontSize: FontSizeManager.s18,
+                        ),
+                      ),
+                    ],
                   ),
                 );
               }

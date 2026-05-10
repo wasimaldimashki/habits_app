@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
+import 'package:lottie/lottie.dart';
 import 'package:habits_app/features/home/cubits/habit_screen_cubit/habit_screen_cubit.dart';
 import 'package:habits_app/features/home/widgets/habit_screen/calendar_widget.dart';
 import 'package:habits_app/features/home/widgets/habit_screen/float_btn_widget.dart';
@@ -25,14 +26,14 @@ class HabitScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Habit App',
+                      S.of(context).app_name,
                       style: getBoldStyle(
                         color: AppColors.getTextPrimaryColor(context),
                         fontSize: FontSizeManager.s28,
                       ),
                     ),
                     Text(
-                      'Month ${state.selectedDate.month} ${state.selectedDate.year}',
+                      '${_monthName(state.selectedDate.month, context)} ${state.selectedDate.year}',
                       style: getSemiBoldStyle(
                         color: AppColors.getTextPrimaryColor(context),
                         fontSize: FontSizeManager.s18,
@@ -50,7 +51,7 @@ class HabitScreen extends StatelessWidget {
                 ),
                 SizedBox(height: AppSize.s16.h),
                 Text(
-                  'Habits',
+                  S.of(context).habits,
                   style: getSemiBoldStyle(
                     color: AppColors.getTextPrimaryColor(context),
                     fontSize: FontSizeManager.s22,
@@ -61,14 +62,14 @@ class HabitScreen extends StatelessWidget {
                   Center(
                     child: Column(
                       children: [
-                        Image.asset(
-                          ImageApplication.noHabits,
+                        Lottie.asset(
+                          'assets/lottie/no_data.json',
                           width: 250.w,
                           height: 250.h,
                         ),
                         SizedBox(height: AppSize.s24.h),
                         Text(
-                          'No Habits Added',
+                          S.of(context).no_habits_added,
                           style: getSemiBoldStyle(
                             color: AppColors.getTextPrimaryColor(context),
                             fontSize: FontSizeManager.s18,
@@ -76,7 +77,7 @@ class HabitScreen extends StatelessWidget {
                         ),
                         SizedBox(height: AppSize.s8.h),
                         Text(
-                          'Try to add some',
+                          S.of(context).try_to_add_some,
                           style: getRegularStyle(
                             color: AppColors.getTextSecondaryColor(context),
                             fontSize: FontSizeManager.s16,
@@ -99,5 +100,13 @@ class HabitScreen extends StatelessWidget {
       ),
       floatingActionButton: const FloatBtnWidget(),
     );
+  }
+
+  String _monthName(int month, BuildContext context) {
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December',
+    ];
+    return months[month - 1];
   }
 }

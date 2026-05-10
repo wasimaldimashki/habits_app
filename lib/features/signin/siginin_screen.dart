@@ -5,13 +5,35 @@ import 'package:habits_app/features/shared/fields_widgets/custom_button_widget.d
 import 'package:habits_app/features/shared/fields_widgets/custom_text_field.dart';
 import 'package:habits_app/features/signin/cubit/signin_cubit.dart';
 
-class SigininScreen extends StatelessWidget {
+class SigininScreen extends StatefulWidget {
   const SigininScreen({super.key});
 
   @override
+  State<SigininScreen> createState() => _SigininScreenState();
+}
+
+class _SigininScreenState extends State<SigininScreen> {
+  late final TextEditingController _nameController;
+  late final SigninCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = SigninCubit();
+    _nameController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _cubit.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => SigninCubit(),
+    return BlocProvider.value(
+      value: _cubit,
       child: Scaffold(
         backgroundColor: AppColors.getBackgroundColor(context),
         body: BlocConsumer<SigninCubit, SigninState>(
@@ -26,13 +48,6 @@ class SigininScreen extends StatelessWidget {
             }
           },
           builder: (context, state) {
-            final cubit = BlocProvider.of<SigninCubit>(context);
-            final nameController = TextEditingController(text: state.userName);
-            if (nameController.text != state.userName) {
-              nameController.selection = TextSelection.fromPosition(
-                  TextPosition(offset: nameController.text.length));
-            }
-
             return Center(
               child: SingleChildScrollView(
                 padding: REdgeInsets.all(AppPadding.p24),
@@ -41,7 +56,7 @@ class SigininScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Welcome to Habit App!',
+                      S.of(context).welcome_to_habit_app,
                       style: getSemiBoldStyle(
                         color: AppColors.getTextPrimaryColor(context),
                         fontSize: FontSizeManager.s28,
@@ -50,7 +65,7 @@ class SigininScreen extends StatelessWidget {
                     ),
                     SizedBox(height: AppSize.s10.h),
                     Text(
-                      'Let\'s get you set up.',
+                      S.of(context).lets_get_you_set_up,
                       style: getRegularStyle(
                         color: AppColors.getTextSecondaryColor(context),
                         fontSize: FontSizeManager.s16,
@@ -59,24 +74,24 @@ class SigininScreen extends StatelessWidget {
                     ),
                     SizedBox(height: AppSize.s40.h),
                     CustomFormTextField(
-                      initialValue: state.userName,
+                      controller: _nameController,
                       onChanged: (value) {
-                        cubit.updateName(value);
+                        _cubit.updateName(value);
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your name';
+                          return S.of(context).please_enter_your_name;
                         }
                         return null;
                       },
-                      nameLabel: 'Name',
-                      hintText: 'enter name here ..',
-                      autofillHints: [AutofillHints.name],
+                      nameLabel: S.of(context).name,
+                      hintText: S.of(context).enter_name_hint,
+                      autofillHints: const [AutofillHints.name],
                       keyboardType: TextInputType.name,
                     ),
                     SizedBox(height: AppSize.s24.h),
                     Text(
-                      'Select your Gender',
+                      S.of(context).select_your_gender,
                       style: getSemiBoldStyle(
                         color: AppColors.getTextPrimaryColor(context),
                         fontSize: FontSizeManager.s18,
@@ -87,7 +102,7 @@ class SigininScreen extends StatelessWidget {
                       children: [
                         Expanded(
                           child: OutlinedButton(
-                            onPressed: () => cubit.updateGender(Gender.male),
+                            onPressed: () => _cubit.updateGender(Gender.male),
                             style: ButtonStyle(
                               backgroundColor:
                                   WidgetStateProperty.resolveWith<Color>(
@@ -105,7 +120,7 @@ class SigininScreen extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'Male',
+                              S.of(context).male,
                               style: getMediumStyle(
                                 color: state.selectedGender == Gender.male
                                     ? AppColors.white
@@ -118,7 +133,8 @@ class SigininScreen extends StatelessWidget {
                         SizedBox(width: AppSize.s16.w),
                         Expanded(
                           child: OutlinedButton(
-                            onPressed: () => cubit.updateGender(Gender.female),
+                            onPressed: () =>
+                                _cubit.updateGender(Gender.female),
                             style: ButtonStyle(
                               backgroundColor:
                                   WidgetStateProperty.resolveWith<Color>(
@@ -136,7 +152,7 @@ class SigininScreen extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              'Female',
+                              S.of(context).female,
                               style: getMediumStyle(
                                 color: state.selectedGender == Gender.female
                                     ? AppColors.white
@@ -151,9 +167,9 @@ class SigininScreen extends StatelessWidget {
                     SizedBox(height: AppSize.s40.h),
                     CustomButtonWidget(
                       borederRadius: defaultRadius,
-                      title: 'Continue',
+                      title: S.of(context).continue_btn,
                       onPressed: state.isFormValid && state is! SigninLoading
-                          ? () => cubit.submitForm()
+                          ? () => _cubit.submitForm()
                           : null,
                     ),
                   ],

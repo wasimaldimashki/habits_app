@@ -35,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.addStatusListener((status) async {
       if (status == AnimationStatus.completed) {
-        final bool isUserExist = await _userService.itemExists('current_user');
+        final bool isUserExist = _userService.itemExists('current_user');
         String? isOnBoardingCompleted =
             sl.call<CacheService>().getData(key: 'isOnBoardingCompleted');
         if (isOnBoardingCompleted == 'true' && isUserExist == false) {

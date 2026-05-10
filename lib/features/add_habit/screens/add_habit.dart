@@ -16,7 +16,7 @@ class AddHabitScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Habit',
+          S.of(context).add_habit,
           style: getSemiBoldStyle(
             color: AppColors.getTextPrimaryColor(context),
             fontSize: FontSizeManager.s20,
@@ -45,7 +45,7 @@ class AddHabitScreen extends StatelessWidget {
                 children: [
                   Center(
                     child: Text(
-                      'Create New Habit',
+                      S.of(context).create_new_habit,
                       style: getSemiBoldStyle(
                         color: AppColors.getTextPrimaryColor(context),
                         fontSize: FontSizeManager.s22,
@@ -62,7 +62,7 @@ class AddHabitScreen extends StatelessWidget {
                   ),
                   SizedBox(height: AppSize.s24.h),
                   Text(
-                    'Habit Name',
+                    S.of(context).habit_name,
                     style: getSemiBoldStyle(
                       color: AppColors.getTextPrimaryColor(context),
                       fontSize: FontSizeManager.s18,
@@ -70,27 +70,27 @@ class AddHabitScreen extends StatelessWidget {
                   ),
                   SizedBox(height: AppSize.s12.h),
                   CustomFormTextField(
-                    nameLabel: 'Name',
+                    nameLabel: S.of(context).name,
                     initialValue: state.habitName,
                     maxLines: 1,
                     maxLength: 20,
                     onChanged: cubit.updateHabitName,
-                    hintText: 'Habit Name',
+                    hintText: S.of(context).habit_name_hint,
                     counterText: '${state.habitName.length}/20',
                   ),
                   SizedBox(height: AppSize.s12.h),
                   CustomFormTextField(
-                    nameLabel: 'Description',
+                    nameLabel: S.of(context).description,
                     initialValue: state.habitDescription,
                     maxLines: 3,
                     maxLength: 100,
                     onChanged: cubit.updateHabitDescription,
-                    hintText: 'Habit Description (Optional)',
+                    hintText: S.of(context).description_hint,
                     counterText: '${state.habitDescription?.length ?? 0}/100',
                   ),
                   SizedBox(height: AppSize.s24.h),
                   Text(
-                    'Repeat Days',
+                    S.of(context).repeat_days,
                     style: getSemiBoldStyle(
                       color: AppColors.getTextPrimaryColor(context),
                       fontSize: FontSizeManager.s18,

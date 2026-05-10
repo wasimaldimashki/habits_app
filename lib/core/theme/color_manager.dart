@@ -20,7 +20,7 @@ class AppColors {
   static const Color darkBackground = Color(0xff121212);
   static const Color darkSurface = Color(0xff1E1E1E);
   static const Color darkTextPrimary = Colors.white;
-  static const Color darkTextSecondary = Colors.white;
+  static const Color darkTextSecondary = Color(0xFFB0B0B0);
   static const Color darkBorder = Color(0xff333333);
   static const Color darkDivider = Color(0xff333333);
   static const Color darkCardShadow = Colors.black;

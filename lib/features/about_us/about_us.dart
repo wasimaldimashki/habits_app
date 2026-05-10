@@ -23,7 +23,7 @@ class AboutUsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('About Us'),
+        title: Text(S.of(context).about_us),
         centerTitle: true,
         backgroundColor: AppColors.getSurfaceColor(context),
       ),

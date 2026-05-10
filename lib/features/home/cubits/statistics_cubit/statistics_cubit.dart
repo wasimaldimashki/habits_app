@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:bloc/bloc.dart';
@@ -13,7 +14,19 @@ class StatisticsCubit extends Cubit<StatisticsState> {
   final GenericHiveService<HabitModel> _habitService =
       sl<GenericHiveService<HabitModel>>();
 
-  StatisticsCubit() : super(StatisticsInitial());
+  late final StreamSubscription<List<HabitModel>> _habitSubscription;
+
+  StatisticsCubit() : super(StatisticsInitial()) {
+    _habitSubscription = _habitService.itemsStream.listen((habits) {
+      loadStatistics();
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _habitSubscription.cancel();
+    return super.close();
+  }
 
   Future<void> loadStatistics() async {
     emit(StatisticsLoading());

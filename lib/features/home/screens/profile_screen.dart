@@ -8,6 +8,7 @@ import 'package:habits_app/core/cache/hive_service.dart';
 import 'package:habits_app/features/home/widgets/profile_screen/profile_header.dart';
 import 'package:habits_app/features/models/habit_model.dart';
 import 'package:habits_app/features/models/user_model.dart';
+import 'package:habits_app/core/localization/localization_cubit.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -39,34 +40,47 @@ class ProfileScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ProfileCardWidget(
-                      title: 'Update User Profile',
+                      title: S.of(context).update_user_profile,
                       icon: Icons.edit,
                       onTap: () async {
                         await context.push(AppRoutes.updateProfileScreen);
                       },
                     ),
                     SizedBox(height: 12.h),
+                    // Language Switcher
                     ProfileCardWidget(
-                      title: 'Reset App Data',
+                      title: S.of(context).change_language,
+                      icon: Icons.language,
+                      onTap: () {
+                        _showLanguageDialog(context);
+                      },
+                    ),
+                    SizedBox(height: 12.h),
+                    ProfileCardWidget(
+                      title: S.of(context).reset_app_data,
                       icon: Icons.refresh,
                       onTap: () async {
                         await showDialog(
                           context: context,
                           builder: (BuildContext dialogContext) {
                             return AlertDialog(
-                              title: const Text('Confirm Reset'),
-                              content: const Text(
-                                'Are you sure you want to reset all app data? This action cannot be undone.',
+                              title: Text(S.of(context).confirm_reset),
+                              content: Text(
+                                S.of(context).reset_confirm_message,
                               ),
                               actions: <Widget>[
                                 TextButton(
-                                  child: const Text('Cancel'),
+                                  child: Text(S.of(context).cancel),
                                   onPressed: () {
                                     Navigator.of(dialogContext).pop();
                                   },
                                 ),
                                 TextButton(
-                                  child: const Text('Reset'),
+                                  child: Text(
+                                    S.of(context).delete,
+                                    style: const TextStyle(
+                                        color: AppColors.errorColor),
+                                  ),
                                   onPressed: () async {
                                     Navigator.of(dialogContext).pop();
                                     await sl<GenericHiveService<UserModel>>()
@@ -87,7 +101,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 12.h),
                     ProfileCardWidget(
-                      title: 'About Us',
+                      title: S.of(context).about_us,
                       icon: Icons.info,
                       onTap: () {
                         context.push(AppRoutes.aboutUsScreen);
@@ -100,6 +114,63 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void _showLanguageDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppSize.s16),
+          ),
+          title: Text(
+            S.of(context).change_language,
+            style: getSemiBoldStyle(
+              color: AppColors.getTextPrimaryColor(context),
+              fontSize: FontSizeManager.s18,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Text('🇸🇦', style: TextStyle(fontSize: 24)),
+                title: Text(
+                  S.of(context).arabic,
+                  style: getMediumStyle(
+                    color: AppColors.getTextPrimaryColor(context),
+                    fontSize: FontSizeManager.s16,
+                  ),
+                ),
+                onTap: () {
+                  context
+                      .read<LocalizationCubit>()
+                      .setLocale(const Locale('ar'));
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+              ListTile(
+                leading: const Text('🇺🇸', style: TextStyle(fontSize: 24)),
+                title: Text(
+                  S.of(context).english,
+                  style: getMediumStyle(
+                    color: AppColors.getTextPrimaryColor(context),
+                    fontSize: FontSizeManager.s16,
+                  ),
+                ),
+                onTap: () {
+                  context
+                      .read<LocalizationCubit>()
+                      .setLocale(const Locale('en'));
+                  Navigator.of(dialogContext).pop();
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

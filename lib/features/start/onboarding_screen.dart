@@ -23,14 +23,31 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           PageView.builder(
             controller: _pageController,
-            itemCount: onboardingPages.length,
+            itemCount: 3,
             onPageChanged: (index) {
               setState(() {
-                _isLastPage = index == onboardingPages.length - 1;
+                _isLastPage = index == 2;
               });
             },
             itemBuilder: (context, index) {
-              final page = onboardingPages[index];
+              final pages = [
+                {
+                  'image': ImageApplication.onBoardingIMage1,
+                  'title': S.of(context).onboarding_title_1,
+                  'description': S.of(context).onboarding_desc_1,
+                },
+                {
+                  'image': ImageApplication.onBoardingIMage2,
+                  'title': S.of(context).onboarding_title_2,
+                  'description': S.of(context).onboarding_desc_2,
+                },
+                {
+                  'image': ImageApplication.onBoardingIMage3,
+                  'title': S.of(context).onboarding_title_3,
+                  'description': S.of(context).onboarding_desc_3,
+                },
+              ];
+              final page = pages[index];
               return buildOnboardingPage(
                 imagePath: page['image']!,
                 title: page['title']!,
@@ -47,7 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 children: [
                   SmoothPageIndicator(
                     controller: _pageController,
-                    count: onboardingPages.length,
+                    count: 3,
                     effect: const ExpandingDotsEffect(
                       dotHeight: 8,
                       dotWidth: 8,
@@ -66,7 +83,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           TextButton(
                             onPressed: () {
                               _pageController
-                                  .jumpToPage(onboardingPages.length - 1);
+                                  .jumpToPage(2);
                             },
                             child: Text(S.of(context).skip,
                                 style: TextStyle(

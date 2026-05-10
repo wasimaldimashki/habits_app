@@ -27,15 +27,7 @@ class GenericHiveService<T> {
     return box.isNotEmpty ? box.values.first : null;
   }
 
-  Future<void> add(T item) async {
-    final dynamic typedItem = item;
-    if (typedItem is HabitModel) {
-      await box.put(typedItem.id, item);
-      _updateStream();
-    } else {
-      throw Exception('Unsupported type for add method.');
-    }
-  }
+
 
   Future<void> saveItem(String key, T item) async {
     await box.put(key, item);

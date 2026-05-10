@@ -33,8 +33,56 @@ class HabitListViewWidget extends StatelessWidget {
         return Dismissible(
           key: ValueKey(habit.id),
           direction: DismissDirection.endToStart,
+          confirmDismiss: (direction) async {
+            return await showDialog<bool>(
+              context: context,
+              builder: (BuildContext dialogContext) {
+                return AlertDialog(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(AppSize.s16),
+                  ),
+                  title: Text(
+                    S.of(context).confirm,
+                    style: getSemiBoldStyle(
+                      color: AppColors.getTextPrimaryColor(context),
+                      fontSize: FontSizeManager.s18,
+                    ),
+                  ),
+                  content: Text(
+                    S.of(context).delete_habit_confirm,
+                    style: getRegularStyle(
+                      color: AppColors.getTextSecondaryColor(context),
+                      fontSize: FontSizeManager.s14,
+                    ),
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(dialogContext).pop(false),
+                      child: Text(
+                        S.of(context).cancel,
+                        style: getMediumStyle(
+                          color: AppColors.getTextSecondaryColor(context),
+                          fontSize: FontSizeManager.s14,
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => Navigator.of(dialogContext).pop(true),
+                      child: Text(
+                        S.of(context).delete,
+                        style: getMediumStyle(
+                          color: AppColors.errorColor,
+                          fontSize: FontSizeManager.s14,
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
+            );
+          },
           background: Container(
-            color: Colors.red,
+            color: AppColors.errorColor,
             alignment: Alignment.centerRight,
             padding: REdgeInsets.symmetric(horizontal: AppPadding.p20),
             child: const Icon(Icons.delete, color: Colors.white),
@@ -42,7 +90,16 @@ class HabitListViewWidget extends StatelessWidget {
           onDismissed: (direction) {
             onDelete(habit.id);
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Habit "${habit.name}" deleted')),
+              SnackBar(
+                content: Text(S.of(context).habit_deleted(habit.name)),
+                duration: const Duration(seconds: 3),
+                action: SnackBarAction(
+                  label: S.of(context).undo,
+                  onPressed: () {
+                    cubit.undoDeleteHabit(habit);
+                  },
+                ),
+              ),
             );
           },
           child: Card(
@@ -72,28 +129,16 @@ class HabitListViewWidget extends StatelessWidget {
                       ),
                     )
                   : null,
-              trailing: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  IconButton(
-                    icon: Icon(
-                      isCompleted
-                          ? Icons.check_circle
-                          : Icons.radio_button_unchecked,
-                      color: isCompleted
-                          ? AppColors.successColor
-                          : AppColors.getTextSecondaryColor(context),
-                    ),
-                    onPressed: () => onToggleCompletion(habit),
-                  ),
-                  // IconButton(
-                  //   icon: const Icon(
-                  //     Icons.delete,
-                  //     color: AppColors.error,
-                  //   ),
-                  //   onPressed: () => onDelete(habit.id),
-                  // ),
-                ],
+              trailing: IconButton(
+                icon: Icon(
+                  isCompleted
+                      ? Icons.check_circle
+                      : Icons.radio_button_unchecked,
+                  color: isCompleted
+                      ? AppColors.successColor
+                      : AppColors.getTextSecondaryColor(context),
+                ),
+                onPressed: () => onToggleCompletion(habit),
               ),
             ),
           ),

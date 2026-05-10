@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:habits_app/core/cache/hive_service.dart';
@@ -55,11 +56,15 @@ class HabitScreenCubit extends Cubit<HabitScreenState> {
     updatedCompletedDates[dateKey] = !(updatedCompletedDates[dateKey] ?? false);
 
     final updatedHabit = habit.copyWith(completedDates: updatedCompletedDates);
-    await _habitService.add(updatedHabit);
+    await _habitService.saveItem(updatedHabit.id, updatedHabit);
   }
 
   Future<void> deleteHabit(String id) async {
     await _habitService.delete(id);
+  }
+
+  Future<void> undoDeleteHabit(HabitModel habit) async {
+    await _habitService.saveItem(habit.id, habit);
   }
 
   void reorderHabits(int oldIndex, int newIndex) {
@@ -79,43 +84,16 @@ class HabitScreenCubit extends Cubit<HabitScreenState> {
 
   Future<Set<DateTime>> _computeMarkedDates(
       List<HabitModel> allHabits, DateTime from, DateTime to) async {
-    final marked = <DateTime>{};
-    DateTime current = DateTime(from.year, from.month, from.day);
-    final end = DateTime(to.year, to.month, to.day);
-    while (!current.isAfter(end)) {
-      final matches = _getHabitsForDate(allHabits, current);
-      if (matches.isNotEmpty) {
-        marked.add(DateTime(current.year, current.month, current.day));
-      }
-      current = current.add(const Duration(days: 1));
-    }
-    return marked;
+    return compute(_computeMarkedDatesIsolate, {
+      'allHabits': allHabits,
+      'from': from,
+      'to': to,
+    });
   }
 
   List<HabitModel> _getHabitsForDate(
       List<HabitModel> allHabits, DateTime date) {
-    return allHabits.where((habit) {
-      final habitDay = date.weekday;
-      final creationDate = habit.creationDate;
-      final dateOnlyCreation =
-          DateTime(creationDate.year, creationDate.month, creationDate.day);
-      final dateOnlyCurrent = DateTime(date.year, date.month, date.day);
-
-      switch (habit.recurrenceType) {
-        case HabitRecurrenceType.daily:
-          return dateOnlyCurrent.isAfter(dateOnlyCreation) ||
-              dateOnlyCurrent.isAtSameMomentAs(dateOnlyCreation);
-        case HabitRecurrenceType.weekly:
-          return habit.daysOfWeek?.contains(habitDay) ?? false;
-        case HabitRecurrenceType.everyXDays:
-          if (habit.interval == null || date.isBefore(habit.creationDate)) {
-            return false;
-          }
-          final difference =
-              dateOnlyCurrent.difference(dateOnlyCreation).inDays;
-          return difference % habit.interval! == 0;
-      }
-    }).toList();
+    return _getHabitsForDateStatic(allHabits, date);
   }
 
   @override
@@ -123,4 +101,49 @@ class HabitScreenCubit extends Cubit<HabitScreenState> {
     _habitsSubscription.cancel();
     return super.close();
   }
+}
+
+// Top-level functions for compute()
+Set<DateTime> _computeMarkedDatesIsolate(Map<String, dynamic> args) {
+  final List<HabitModel> allHabits = args['allHabits'];
+  final DateTime from = args['from'];
+  final DateTime to = args['to'];
+
+  final marked = <DateTime>{};
+  DateTime current = DateTime(from.year, from.month, from.day);
+  final end = DateTime(to.year, to.month, to.day);
+  while (!current.isAfter(end)) {
+    final matches = _getHabitsForDateStatic(allHabits, current);
+    if (matches.isNotEmpty) {
+      marked.add(DateTime(current.year, current.month, current.day));
+    }
+    current = current.add(const Duration(days: 1));
+  }
+  return marked;
+}
+
+List<HabitModel> _getHabitsForDateStatic(
+    List<HabitModel> allHabits, DateTime date) {
+  return allHabits.where((habit) {
+    final habitDay = date.weekday;
+    final creationDate = habit.creationDate;
+    final dateOnlyCreation =
+        DateTime(creationDate.year, creationDate.month, creationDate.day);
+    final dateOnlyCurrent = DateTime(date.year, date.month, date.day);
+
+    switch (habit.recurrenceType) {
+      case HabitRecurrenceType.daily:
+        return dateOnlyCurrent.isAfter(dateOnlyCreation) ||
+            dateOnlyCurrent.isAtSameMomentAs(dateOnlyCreation);
+      case HabitRecurrenceType.weekly:
+        return habit.daysOfWeek?.contains(habitDay) ?? false;
+      case HabitRecurrenceType.everyXDays:
+        if (habit.interval == null || date.isBefore(habit.creationDate)) {
+          return false;
+        }
+        final difference =
+            dateOnlyCurrent.difference(dateOnlyCreation).inDays;
+        return difference % habit.interval! == 0;
+    }
+  }).toList();
 }
