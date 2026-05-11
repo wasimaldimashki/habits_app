@@ -48,6 +48,13 @@ class ProfileHeader extends StatelessWidget {
                         radius: 60.r,
                         backgroundColor: AppColors.getBackgroundColor(context),
                         child: Image.network(
+                          errorBuilder: (context, error, stackTrace) {
+                            return Icon(
+                              Icons.person,
+                              size: 60.r,
+                              color: AppColors.getTextPrimaryColor(context),
+                            );
+                          },
                           state.user.gender!.name.toLowerCase() == 'male'
                               ? 'https://avatar.iran.liara.run/public/43'
                               : 'https://avatar.iran.liara.run/public/53',
