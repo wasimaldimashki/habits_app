@@ -139,7 +139,7 @@ class AddHabitCubit extends Cubit<AddHabitState> {
           final hour = int.parse(timeParts[0]);
           final minute = int.parse(timeParts[1]);
           await sl<NotificationService>().scheduleHabitReminder(
-            id: habitId.hashCode,
+            id: NotificationService.notificationIdForHabit(habitId),
             title: S.current.habit_reminder_title,
             body: S.current.habit_reminder_body(state.habitName),
             hour: hour,

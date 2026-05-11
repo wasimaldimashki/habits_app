@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:habits_app/core/cache/hive_service.dart';
+import 'package:habits_app/core/services/notification_service.dart';
+import 'package:habits_app/core/services/service_locator.dart';
 import 'package:habits_app/features/models/habit_model.dart';
 
 part 'manage_habit_state.dart';
@@ -21,7 +23,16 @@ class ManageHabitCubit extends Cubit<ManageHabitState> {
 
   Future<void> deleteHabit(String id) async {
     try {
+      // Look up the habit before deleting so we can cancel its notification.
+      final habit = _hiveService.get(id);
       await _hiveService.delete(id);
+      if (habit?.reminderTime != null) {
+        try {
+          await sl<NotificationService>().cancelNotification(
+            NotificationService.notificationIdForHabit(id),
+          );
+        } catch (_) {}
+      }
     } catch (e) {
       emit(ManageHabitError(message: 'Failed to delete habit: $e'));
     }

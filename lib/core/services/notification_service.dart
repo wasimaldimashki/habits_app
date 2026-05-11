@@ -18,18 +18,24 @@ class NotificationService {
   static const _channelId = 'habit_reminders_channel';
   static const _channelName = 'Habit Reminders';
 
+  /// Converts a habit UUID into a safe, positive Android notification ID.
+  ///
+  /// Android notification IDs are Java `int` (32-bit signed). Dart's
+  /// `String.hashCode` can be negative or exceed 32-bit range on 64-bit
+  /// devices. Masking with 0x7FFFFFFF clears the sign bit so the result is
+  /// always a positive 31-bit integer that fits safely in Java's int range.
+  static int notificationIdForHabit(String habitId) =>
+      habitId.hashCode & 0x7FFFFFFF;
+
   Future<void> init() async {
     try {
       // Step 1: Load timezone DB and set the device's IANA timezone.
-      // tz.initializeTimeZones() alone leaves tz.local as UTC, so all
-      // scheduled times would be offset by the device's UTC offset.
       tz.initializeTimeZones();
       try {
         final timezoneInfo = await FlutterTimezone.getLocalTimezone();
         tz.setLocalLocation(tz.getLocation(timezoneInfo.identifier));
         dev.log('Timezone set to: ${timezoneInfo.identifier}');
       } catch (e) {
-        // Fallback: keep tz.local as UTC and log the failure.
         dev.log('Failed to detect device timezone, falling back to UTC: $e');
       }
 
@@ -53,13 +59,14 @@ class NotificationService {
         },
       );
 
-      final androidPlugin =
-          _notificationsPlugin.resolvePlatformSpecificImplementation<
+      final androidPlugin = _notificationsPlugin
+          .resolvePlatformSpecificImplementation<
               AndroidFlutterLocalNotificationsPlugin>();
 
       if (androidPlugin != null) {
-        // Step 2: Create the notification channel explicitly so it exists
-        // before the first notification fires (required on Android 8+).
+        // Step 2: Create the notification channel explicitly.
+        // Required on Android 8+ — channels must exist before any
+        // notification is scheduled or it will be silently dropped.
         await androidPlugin.createNotificationChannel(
           const AndroidNotificationChannel(
             _channelId,
@@ -72,6 +79,7 @@ class NotificationService {
         );
 
         // Step 3: Request POST_NOTIFICATIONS permission (Android 13+).
+        // If denied, scheduled notifications are silently dropped by the OS.
         await androidPlugin.requestNotificationsPermission();
 
         // Step 4: Request exact alarm permission (Android 12+).
@@ -86,12 +94,21 @@ class NotificationService {
     }
   }
 
+  /// Returns true if the app has the POST_NOTIFICATIONS permission.
+  Future<bool> areNotificationsEnabled() async {
+    final androidPlugin = _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+    if (androidPlugin == null) return true;
+    return await androidPlugin.areNotificationsEnabled() ?? false;
+  }
+
   /// Returns true if the app can schedule exact alarms on this device.
   Future<bool> canScheduleExactAlarms() async {
-    final androidPlugin =
-        _notificationsPlugin.resolvePlatformSpecificImplementation<
+    final androidPlugin = _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
             AndroidFlutterLocalNotificationsPlugin>();
-    if (androidPlugin == null) return true; // non-Android platform
+    if (androidPlugin == null) return true;
     return await androidPlugin.canScheduleExactNotifications() ?? false;
   }
 
@@ -102,17 +119,28 @@ class NotificationService {
     required int hour,
     required int minute,
   }) async {
-    // Guard: verify exact alarm permission before attempting to schedule.
-    // Without this permission on Android 12+, zonedSchedule throws a
-    // SecurityException that would be swallowed if we don't check first.
+    final androidPlugin = _notificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>();
+
+    // Guard 1: POST_NOTIFICATIONS permission — without this the notification
+    // is silently swallowed by the OS even if scheduling succeeds.
+    if (androidPlugin != null) {
+      final notificationsEnabled =
+          await androidPlugin.areNotificationsEnabled() ?? false;
+      if (!notificationsEnabled) {
+        await androidPlugin.requestNotificationsPermission();
+        throw const NotificationPermissionException(
+          'Notification permission not granted. '
+          'Please allow notifications for this app in Settings.',
+        );
+      }
+    }
+
+    // Guard 2: Exact alarm permission — required on Android 12+.
     final canSchedule = await canScheduleExactAlarms();
     if (!canSchedule) {
-      // Prompt the user to grant the permission and surface a clear error.
-      final androidPlugin =
-          _notificationsPlugin.resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin>();
       await androidPlugin?.requestExactAlarmsPermission();
-
       throw const NotificationPermissionException(
         'Exact alarm permission not granted. '
         'Please enable "Alarms & reminders" for this app in Settings.',

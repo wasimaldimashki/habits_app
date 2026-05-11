@@ -3,7 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:habits_app/core/cache/hive_service.dart';
+import 'package:habits_app/core/services/notification_service.dart';
 import 'package:habits_app/core/services/service_locator.dart';
+import 'package:habits_app/generated/l10n.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:habits_app/features/models/habit_model.dart';
 part 'habit_screen_state.dart';
@@ -60,11 +62,33 @@ class HabitScreenCubit extends Cubit<HabitScreenState> {
   }
 
   Future<void> deleteHabit(String id) async {
+    // Look up the habit before deleting so we can cancel its notification.
+    final habit = _habitService.get(id);
     await _habitService.delete(id);
+    if (habit?.reminderTime != null) {
+      try {
+        await sl<NotificationService>().cancelNotification(
+          NotificationService.notificationIdForHabit(id),
+        );
+      } catch (_) {}
+    }
   }
 
   Future<void> undoDeleteHabit(HabitModel habit) async {
     await _habitService.saveItem(habit.id, habit);
+    // Re-schedule the notification if the habit had a reminder.
+    if (habit.reminderTime != null) {
+      try {
+        final parts = habit.reminderTime!.split(':');
+        await sl<NotificationService>().scheduleHabitReminder(
+          id: NotificationService.notificationIdForHabit(habit.id),
+          title: S.current.habit_reminder_title,
+          body: S.current.habit_reminder_body(habit.name),
+          hour: int.parse(parts[0]),
+          minute: int.parse(parts[1]),
+        );
+      } catch (_) {}
+    }
   }
 
   void reorderHabits(int oldIndex, int newIndex) {
