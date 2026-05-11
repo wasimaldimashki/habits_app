@@ -8,7 +8,7 @@ import 'package:habits_app/core/cache/hive_service.dart';
 import 'package:habits_app/features/home/widgets/profile_screen/profile_header.dart';
 import 'package:habits_app/features/models/habit_model.dart';
 import 'package:habits_app/features/models/user_model.dart';
-import 'package:habits_app/core/localization/localization_cubit.dart';
+import 'package:habits_app/features/shared/widgets/language_dialog.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -52,7 +52,7 @@ class ProfileScreen extends StatelessWidget {
                       title: S.of(context).change_language,
                       icon: Icons.language,
                       onTap: () {
-                        _showLanguageDialog(context);
+                        showLanguageDialog(context);
                       },
                     ),
                     SizedBox(height: 12.h),
@@ -114,63 +114,6 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-
-  void _showLanguageDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(AppSize.s16),
-          ),
-          title: Text(
-            S.of(context).change_language,
-            style: getSemiBoldStyle(
-              color: AppColors.getTextPrimaryColor(context),
-              fontSize: FontSizeManager.s18,
-            ),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                leading: const Text('🇸🇦', style: TextStyle(fontSize: 24)),
-                title: Text(
-                  S.of(context).arabic,
-                  style: getMediumStyle(
-                    color: AppColors.getTextPrimaryColor(context),
-                    fontSize: FontSizeManager.s16,
-                  ),
-                ),
-                onTap: () {
-                  context
-                      .read<LocalizationCubit>()
-                      .setLocale(const Locale('ar'));
-                  Navigator.of(dialogContext).pop();
-                },
-              ),
-              ListTile(
-                leading: const Text('🇺🇸', style: TextStyle(fontSize: 24)),
-                title: Text(
-                  S.of(context).english,
-                  style: getMediumStyle(
-                    color: AppColors.getTextPrimaryColor(context),
-                    fontSize: FontSizeManager.s16,
-                  ),
-                ),
-                onTap: () {
-                  context
-                      .read<LocalizationCubit>()
-                      .setLocale(const Locale('en'));
-                  Navigator.of(dialogContext).pop();
-                },
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }
