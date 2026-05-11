@@ -96,7 +96,7 @@ class HabitListViewWidget extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 content: Text(S.of(context).habit_deleted(habit.name)),
-                duration: const Duration(seconds: 3),
+                duration: const Duration(seconds: 2),
                 action: SnackBarAction(
                   label: S.of(context).undo,
                   onPressed: () {
