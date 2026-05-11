@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
 import 'package:lottie/lottie.dart';
@@ -33,7 +35,9 @@ class HabitScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${_monthName(state.selectedDate.month, context)} ${state.selectedDate.year}',
+                      DateFormat.yMMMM(
+                              Localizations.localeOf(context).languageCode)
+                          .format(state.selectedDate),
                       style: getSemiBoldStyle(
                         color: AppColors.getTextPrimaryColor(context),
                         fontSize: FontSizeManager.s18,
@@ -74,7 +78,10 @@ class HabitScreen extends StatelessWidget {
                             color: AppColors.getTextPrimaryColor(context),
                             fontSize: FontSizeManager.s18,
                           ),
-                        ),
+                        )
+                            .animate()
+                            .fadeIn(delay: 300.ms)
+                            .slideY(begin: 0.5, end: 0),
                         SizedBox(height: AppSize.s8.h),
                         Text(
                           S.of(context).try_to_add_some,
@@ -82,7 +89,10 @@ class HabitScreen extends StatelessWidget {
                             color: AppColors.getTextSecondaryColor(context),
                             fontSize: FontSizeManager.s16,
                           ),
-                        ),
+                        )
+                            .animate()
+                            .fadeIn(delay: 500.ms)
+                            .slideY(begin: 0.5, end: 0),
                       ],
                     ),
                   )
@@ -92,7 +102,7 @@ class HabitScreen extends StatelessWidget {
                     onReorder: cubit.reorderHabits,
                     onToggleCompletion: cubit.toggleHabitCompletion,
                     onDelete: cubit.deleteHabit,
-                  ),
+                  ).animate().fadeIn(duration: 400.ms),
               ],
             ),
           );
@@ -100,13 +110,5 @@ class HabitScreen extends StatelessWidget {
       ),
       floatingActionButton: const FloatBtnWidget(),
     );
-  }
-
-  String _monthName(int month, BuildContext context) {
-    const months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December',
-    ];
-    return months[month - 1];
   }
 }

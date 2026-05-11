@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/widgets.dart';
 import 'package:habits_app/core/cache/hive_service.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
+import 'package:habits_app/core/services/notification_service.dart';
 import 'package:habits_app/core/services/service_locator.dart';
 import 'package:habits_app/features/models/habit_model.dart';
 import 'package:uuid/uuid.dart';
@@ -17,63 +18,39 @@ class AddHabitCubit extends Cubit<AddHabitState> {
   final formkey = GlobalKey<FormState>();
 
   // Helper method to check form validity based on the current state.
-  bool get _isFormValid {
-    if (state.habitName.isEmpty) return false;
-    switch (state.recurrenceType) {
-      case HabitRecurrenceType.daily:
-        return true;
-      case HabitRecurrenceType.weekly:
-        return state.selectedDays.isNotEmpty;
-      case HabitRecurrenceType.everyXDays:
-        return state.everyXDaysInterval > 0;
-    }
-  }
-
-  // A single emit function to update state based on current values and validity.
-  void emitUpdatedState() {
-    emit(AddHabitFormState(
-      habitName: state.habitName,
-      habitDescription: state.habitDescription,
-      recurrenceType: state.recurrenceType,
-      selectedDays: state.selectedDays,
-      everyXDaysInterval: state.everyXDaysInterval,
-      isFormValid: _isFormValid,
-    ));
-  }
+  // bool get _isFormValid {
+  //   if (state.habitName.isEmpty) return false;
+  //   switch (state.recurrenceType) {
+  //     case HabitRecurrenceType.daily:
+  //       return true;
+  //     case HabitRecurrenceType.weekly:
+  //       return state.selectedDays.isNotEmpty;
+  //     case HabitRecurrenceType.everyXDays:
+  //       return state.everyXDaysInterval > 0;
+  //   }
+  // }
 
   void updateHabitName(String name) {
-    emit(AddHabitFormState(
-      habitName: name,
-      habitDescription: state.habitDescription,
-      recurrenceType: state.recurrenceType,
-      selectedDays: state.selectedDays,
-      everyXDaysInterval: state.everyXDaysInterval,
-      isFormValid: name.isNotEmpty,
-    ));
+    bool isValid = name.isNotEmpty;
+    if (state.recurrenceType == HabitRecurrenceType.weekly &&
+        state.selectedDays.isEmpty) isValid = false;
+    if (state.recurrenceType == HabitRecurrenceType.everyXDays &&
+        state.everyXDaysInterval <= 0) isValid = false;
+
+    emit(state.copyWith(habitName: name, isFormValid: isValid));
   }
 
-  void updateHabitDescription(String description) {
-    emit(AddHabitFormState(
-      habitName: state.habitName,
-      habitDescription: description.isEmpty ? null : description,
-      recurrenceType: state.recurrenceType,
-      selectedDays: state.selectedDays,
-      everyXDaysInterval: state.everyXDaysInterval,
-      isFormValid: _isFormValid,
-    ));
-  }
+  void updateHabitDescription(String description) =>
+      emit(state.copyWith(habitDescription: description));
 
   void updateRecurrenceType(HabitRecurrenceType type) {
-    emit(AddHabitFormState(
-      habitName: state.habitName,
-      habitDescription: state.habitDescription,
-      recurrenceType: type,
-      selectedDays:
-          type == HabitRecurrenceType.weekly ? state.selectedDays : const [],
-      everyXDaysInterval:
-          type == HabitRecurrenceType.everyXDays ? state.everyXDaysInterval : 1,
-      isFormValid: _isFormValid,
-    ));
+    bool isValid = state.habitName.isNotEmpty;
+    if (type == HabitRecurrenceType.weekly && state.selectedDays.isEmpty)
+      isValid = false;
+    if (type == HabitRecurrenceType.everyXDays && state.everyXDaysInterval <= 0)
+      isValid = false;
+
+    emit(state.copyWith(recurrenceType: type, isFormValid: isValid));
   }
 
   void toggleSelectedDay(int day) {
@@ -83,44 +60,56 @@ class AddHabitCubit extends Cubit<AddHabitState> {
     } else {
       newSelectedDays.add(day);
     }
-    emit(AddHabitFormState(
-      habitName: state.habitName,
-      habitDescription: state.habitDescription,
-      recurrenceType: state.recurrenceType,
-      selectedDays: newSelectedDays,
-      everyXDaysInterval: state.everyXDaysInterval,
-      isFormValid: _isFormValid,
-    ));
+
+    bool isValid = state.habitName.isNotEmpty;
+    if (state.recurrenceType == HabitRecurrenceType.weekly &&
+        newSelectedDays.isEmpty) isValid = false;
+
+    emit(state.copyWith(selectedDays: newSelectedDays, isFormValid: isValid));
   }
 
   void updateEveryXDaysInterval(int interval) {
-    emit(AddHabitFormState(
-      habitName: state.habitName,
-      habitDescription: state.habitDescription,
-      recurrenceType: state.recurrenceType,
-      selectedDays: state.selectedDays,
-      everyXDaysInterval: interval,
-      isFormValid: _isFormValid,
-    ));
+    bool isValid = state.habitName.isNotEmpty;
+    if (state.recurrenceType == HabitRecurrenceType.everyXDays && interval <= 0)
+      isValid = false;
+
+    emit(state.copyWith(everyXDaysInterval: interval, isFormValid: isValid));
+  }
+
+  void updateColor(int colorValue) =>
+      emit(state.copyWith(colorValue: colorValue));
+
+  void updateIcon(int iconCodePoint) =>
+      emit(state.copyWith(iconCodePoint: iconCodePoint));
+
+  void updateReminderTime(String? time) {
+    if (time == null) {
+      emit(state.copyWith(clearReminder: true));
+    } else {
+      emit(state.copyWith(reminderTime: time));
+    }
   }
 
   // Save the new habit to Hive.
   Future<void> saveHabit() async {
-    if (!_isFormValid) return;
+    if (!state.isFormValid) return;
 
-    // Emit a loading state that carries the current form data.
     emit(AddHabitLoading(
       habitName: state.habitName,
       habitDescription: state.habitDescription,
       recurrenceType: state.recurrenceType,
       selectedDays: state.selectedDays,
       everyXDaysInterval: state.everyXDaysInterval,
-      isFormValid: _isFormValid,
+      colorValue: state.colorValue,
+      iconCodePoint: state.iconCodePoint,
+      reminderTime: state.reminderTime,
+      isFormValid: state.isFormValid,
     ));
 
     try {
+      final habitId = const Uuid().v4();
       final habit = HabitModel(
-        id: const Uuid().v4(),
+        id: habitId,
         name: state.habitName,
         description: state.habitDescription,
         recurrenceType: state.recurrenceType,
@@ -132,18 +121,46 @@ class AddHabitCubit extends Cubit<AddHabitState> {
             : null,
         creationDate: DateTime.now(),
         completedDates: {},
+        colorValue: state.colorValue,
+        iconCodePoint: state.iconCodePoint,
+        reminderTime: state.reminderTime,
       );
 
+      // Save the habit first — notification scheduling is best-effort and
+      // must never prevent the habit from being stored.
       await _habitService.saveItem(habit.id, habit);
 
-      // After a successful save, emit a success state.
+      // Schedule the daily reminder in a separate try-catch so a permission
+      // failure or any other error does not roll back the saved habit.
+      String? notificationWarning;
+      if (state.reminderTime != null) {
+        try {
+          final timeParts = state.reminderTime!.split(':');
+          final hour = int.parse(timeParts[0]);
+          final minute = int.parse(timeParts[1]);
+          await sl<NotificationService>().scheduleHabitReminder(
+            id: habitId.hashCode,
+            title: S.current.habit_reminder_title,
+            body: S.current.habit_reminder_body(state.habitName),
+            hour: hour,
+            minute: minute,
+          );
+        } catch (e) {
+          notificationWarning = e.toString();
+        }
+      }
+
       emit(AddHabitSuccess(
+        notificationWarning: notificationWarning,
         habitName: state.habitName,
         habitDescription: state.habitDescription,
         recurrenceType: state.recurrenceType,
         selectedDays: state.selectedDays,
         everyXDaysInterval: state.everyXDaysInterval,
-        isFormValid: _isFormValid,
+        colorValue: state.colorValue,
+        iconCodePoint: state.iconCodePoint,
+        reminderTime: state.reminderTime,
+        isFormValid: state.isFormValid,
       ));
     } catch (e) {
       emit(AddHabitError(
@@ -153,6 +170,9 @@ class AddHabitCubit extends Cubit<AddHabitState> {
         recurrenceType: state.recurrenceType,
         selectedDays: state.selectedDays,
         everyXDaysInterval: state.everyXDaysInterval,
+        colorValue: state.colorValue,
+        iconCodePoint: state.iconCodePoint,
+        reminderTime: state.reminderTime,
         isFormValid: state.isFormValid,
       ));
     }

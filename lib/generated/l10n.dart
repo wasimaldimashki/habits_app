@@ -949,6 +949,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Habit Reminder`
+  String get habit_reminder_title {
+    return Intl.message(
+      'Habit Reminder',
+      name: 'habit_reminder_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `It's time to work on your habit: {name}`
+  String habit_reminder_body(Object name) {
+    return Intl.message(
+      'It\'s time to work on your habit: $name',
+      name: 'habit_reminder_body',
+      desc: '',
+      args: [name],
+    );
+  }
+
+  /// `Pick Color`
+  String get pick_color {
+    return Intl.message(
+      'Pick Color',
+      name: 'pick_color',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pick Icon`
+  String get pick_icon {
+    return Intl.message(
+      'Pick Icon',
+      name: 'pick_icon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reminder Time`
+  String get reminder_time {
+    return Intl.message(
+      'Reminder Time',
+      name: 'reminder_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Best Streak`
+  String get best_streak {
+    return Intl.message(
+      'Best Streak',
+      name: 'best_streak',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current Streak`
+  String get current_streak {
+    return Intl.message(
+      'Current Streak',
+      name: 'current_streak',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Habit saved, but the reminder won't fire until you enable "Alarms & reminders" for this app in Settings.`
+  String get notification_permission_warning {
+    return Intl.message(
+      'Habit saved, but the reminder won\'t fire until you enable "Alarms & reminders" for this app in Settings.',
+      name: 'notification_permission_warning',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

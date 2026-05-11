@@ -7,9 +7,9 @@ import 'package:habits_app/features/about_us/about_us.dart';
 import 'package:habits_app/features/add_habit/cubit/add_habit_cubit.dart';
 import 'package:habits_app/features/add_habit/screens/add_habit.dart';
 import 'package:habits_app/features/home/cubits/habit_screen_cubit/habit_screen_cubit.dart';
+import 'package:habits_app/features/home/cubits/statistics_cubit/statistics_cubit.dart';
 import 'package:habits_app/features/home/home_screen.dart';
 import 'package:habits_app/features/manage_habit/screens/manage_habit.dart';
-import 'package:habits_app/features/signin/cubit/signin_cubit.dart';
 import 'package:habits_app/features/signin/siginin_screen.dart';
 import 'package:habits_app/features/start/onboarding_screen.dart';
 import 'package:habits_app/features/start/splash_screen.dart';
@@ -50,6 +50,9 @@ class AppRouter {
           providers: [
             BlocProvider(
               create: (context) => HabitScreenCubit()..loadAllHabits(),
+            ),
+            BlocProvider(
+              create: (context) => StatisticsCubit()..loadStatistics(),
             ),
           ],
           child: const HomeScreen(),

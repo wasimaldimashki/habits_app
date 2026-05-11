@@ -1,4 +1,3 @@
-import 'package:habits_app/features/models/habit_model.dart';
 import 'dart:async';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -26,8 +25,6 @@ class GenericHiveService<T> {
   T? getSingleItem() {
     return box.isNotEmpty ? box.values.first : null;
   }
-
-
 
   Future<void> saveItem(String key, T item) async {
     await box.put(key, item);

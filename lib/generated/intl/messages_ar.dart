@@ -22,7 +22,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(name) => "تم حذف العادة \"${name}\"";
 
-  static String m1(count) => "كل ${count} يوم";
+  static String m1(name) => "حان الوقت للقيام بعادتك: ${name}";
+
+  static String m2(count) => "كل ${count} يوم";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -31,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "app_name": MessageLookupByLibrary.simpleMessage("تطبيق العادات"),
         "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
         "back": MessageLookupByLibrary.simpleMessage("رجوع"),
+        "best_streak": MessageLookupByLibrary.simpleMessage("أفضل سلسلة"),
         "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
         "change_language": MessageLookupByLibrary.simpleMessage("تغيير اللغة"),
         "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
@@ -45,6 +48,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "continue_btn": MessageLookupByLibrary.simpleMessage("متابعة"),
         "create_new_habit":
             MessageLookupByLibrary.simpleMessage("إنشاء عادة جديدة"),
+        "current_streak":
+            MessageLookupByLibrary.simpleMessage("السلسلة الحالية"),
         "daily": MessageLookupByLibrary.simpleMessage("يومياً"),
         "days": MessageLookupByLibrary.simpleMessage("أيام"),
         "delete": MessageLookupByLibrary.simpleMessage("حذف"),
@@ -65,10 +70,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "habit_deleted": m0,
         "habit_name": MessageLookupByLibrary.simpleMessage("اسم العادة"),
         "habit_name_hint": MessageLookupByLibrary.simpleMessage("اسم العادة"),
+        "habit_reminder_body": m1,
+        "habit_reminder_title":
+            MessageLookupByLibrary.simpleMessage("تذكير بالعادة"),
         "habits": MessageLookupByLibrary.simpleMessage("العادات"),
         "habits_completed_today":
             MessageLookupByLibrary.simpleMessage("عادات مكتملة اليوم"),
-        "interval_days": m1,
+        "interval_days": m2,
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "lets_get_you_set_up":
             MessageLookupByLibrary.simpleMessage("لنقم بإعداد حسابك."),
@@ -86,6 +94,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لا توجد عادات للإدارة."),
         "no_habits_yet":
             MessageLookupByLibrary.simpleMessage("لا توجد عادات بعد!"),
+        "notification_permission_warning": MessageLookupByLibrary.simpleMessage(
+            "تم حفظ العادة، لكن التذكير لن يعمل حتى تُفعّل \"المنبهات والتذكيرات\" لهذا التطبيق في الإعدادات."),
         "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
         "onboarding_desc_1": MessageLookupByLibrary.simpleMessage(
             "ابدأ ببناء عادات إيجابية ستحوّل حياتك يوماً بعد يوم."),
@@ -102,11 +112,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "overview": MessageLookupByLibrary.simpleMessage("نظرة عامة"),
         "page_unavailable": MessageLookupByLibrary.simpleMessage(
             "هذه الصفحة غير متاحة حالياً."),
+        "pick_color": MessageLookupByLibrary.simpleMessage("اختر لوناً"),
+        "pick_icon": MessageLookupByLibrary.simpleMessage("اختر أيقونة"),
         "please_enter_your_name":
             MessageLookupByLibrary.simpleMessage("الرجاء إدخال اسمك"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
         "profile_updated_successfully": MessageLookupByLibrary.simpleMessage(
             "تم تحديث الملف الشخصي بنجاح!"),
+        "reminder_time": MessageLookupByLibrary.simpleMessage("وقت التذكير"),
         "repeat_days": MessageLookupByLibrary.simpleMessage("أيام التكرار"),
         "reset_app_data":
             MessageLookupByLibrary.simpleMessage("إعادة تعيين بيانات التطبيق"),

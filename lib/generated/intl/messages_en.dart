@@ -22,7 +22,9 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(name) => "Habit \"${name}\" deleted";
 
-  static String m1(count) => "Every ${count} days";
+  static String m1(name) => "It\'s time to work on your habit: ${name}";
+
+  static String m2(count) => "Every ${count} days";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -31,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "app_name": MessageLookupByLibrary.simpleMessage("Habit App"),
         "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
         "back": MessageLookupByLibrary.simpleMessage("Back"),
+        "best_streak": MessageLookupByLibrary.simpleMessage("Best Streak"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
         "change_language":
             MessageLookupByLibrary.simpleMessage("Change Language"),
@@ -46,6 +49,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "continue_btn": MessageLookupByLibrary.simpleMessage("Continue"),
         "create_new_habit":
             MessageLookupByLibrary.simpleMessage("Create New Habit"),
+        "current_streak":
+            MessageLookupByLibrary.simpleMessage("Current Streak"),
         "daily": MessageLookupByLibrary.simpleMessage("Daily"),
         "days": MessageLookupByLibrary.simpleMessage("days"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
@@ -67,10 +72,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "habit_deleted": m0,
         "habit_name": MessageLookupByLibrary.simpleMessage("Habit Name"),
         "habit_name_hint": MessageLookupByLibrary.simpleMessage("Habit Name"),
+        "habit_reminder_body": m1,
+        "habit_reminder_title":
+            MessageLookupByLibrary.simpleMessage("Habit Reminder"),
         "habits": MessageLookupByLibrary.simpleMessage("Habits"),
         "habits_completed_today":
             MessageLookupByLibrary.simpleMessage("Habits Completed Today"),
-        "interval_days": m1,
+        "interval_days": m2,
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "lets_get_you_set_up":
             MessageLookupByLibrary.simpleMessage("Let\'s get you set up."),
@@ -87,6 +95,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no_habits_to_manage":
             MessageLookupByLibrary.simpleMessage("No habits to manage."),
         "no_habits_yet": MessageLookupByLibrary.simpleMessage("No habits yet!"),
+        "notification_permission_warning": MessageLookupByLibrary.simpleMessage(
+            "Habit saved, but the reminder won\'t fire until you enable \"Alarms & reminders\" for this app in Settings."),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "onboarding_desc_1": MessageLookupByLibrary.simpleMessage(
             "Start building positive habits that will transform your life one day at a time."),
@@ -103,11 +113,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "overview": MessageLookupByLibrary.simpleMessage("Overview"),
         "page_unavailable": MessageLookupByLibrary.simpleMessage(
             "This page is currently unavailable."),
+        "pick_color": MessageLookupByLibrary.simpleMessage("Pick Color"),
+        "pick_icon": MessageLookupByLibrary.simpleMessage("Pick Icon"),
         "please_enter_your_name":
             MessageLookupByLibrary.simpleMessage("Please enter your name"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "profile_updated_successfully": MessageLookupByLibrary.simpleMessage(
             "Profile updated successfully!"),
+        "reminder_time": MessageLookupByLibrary.simpleMessage("Reminder Time"),
         "repeat_days": MessageLookupByLibrary.simpleMessage("Repeat Days"),
         "reset_app_data":
             MessageLookupByLibrary.simpleMessage("Reset App Data"),

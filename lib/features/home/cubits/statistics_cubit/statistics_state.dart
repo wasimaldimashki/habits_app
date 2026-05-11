@@ -16,16 +16,20 @@ class StatisticsLoaded extends StatisticsState {
   final int completedDaysLast7;
   final int completedDaysLast30;
   final int longestStreak;
+  final int currentStreak;
   final int totalHabits;
   final int habitsCompletedToday;
+  final Map<DateTime, int> weeklyActivity;
 
   const StatisticsLoaded({
     required this.completionRate,
     required this.completedDaysLast7,
     required this.completedDaysLast30,
     required this.longestStreak,
+    required this.currentStreak,
     required this.totalHabits,
     required this.habitsCompletedToday,
+    this.weeklyActivity = const {},
   });
 
   @override
@@ -34,8 +38,10 @@ class StatisticsLoaded extends StatisticsState {
         completedDaysLast7,
         completedDaysLast30,
         longestStreak,
+        currentStreak,
         totalHabits,
         habitsCompletedToday,
+        weeklyActivity,
       ];
 }
 

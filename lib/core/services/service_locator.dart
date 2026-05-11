@@ -11,6 +11,7 @@ import 'package:habits_app/features/update_profile/cubit/update_profile_cubit.da
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:habits_app/core/cache/hive_adapters.dart';
+import 'package:habits_app/core/services/notification_service.dart';
 
 final sl = GetIt.instance;
 
@@ -39,6 +40,9 @@ Future<void> setupServiceLocator() async {
   );
   sl.registerLazySingleton<CacheService>(
       () => CacheService(sharedPreferences: sl()));
+
+  sl.registerLazySingleton<NotificationService>(() => NotificationService());
+  await sl<NotificationService>().init();
 
   sl.registerFactory<StatisticsCubit>(() => StatisticsCubit());
   sl.registerFactory<HabitScreenCubit>(() => HabitScreenCubit());

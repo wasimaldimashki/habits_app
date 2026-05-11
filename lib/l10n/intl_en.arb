@@ -102,5 +102,13 @@
     "select_days": "Select days",
     "select_interval": "Select interval",
     "no_data": "No Data",
-    "select_a_time": "Select a time"
+    "select_a_time": "Select a time",
+    "habit_reminder_title": "Habit Reminder",
+    "habit_reminder_body": "It's time to work on your habit: {name}",
+    "pick_color": "Pick Color",
+    "pick_icon": "Pick Icon",
+    "reminder_time": "Reminder Time",
+    "best_streak": "Best Streak",
+    "current_streak": "Current Streak",
+    "notification_permission_warning": "Habit saved, but the reminder won't fire until you enable \"Alarms & reminders\" for this app in Settings."
 }

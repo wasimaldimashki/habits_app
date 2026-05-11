@@ -8,15 +8,15 @@ class CompletionRateCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: REdgeInsets.all(AppPadding.p16),
+      padding: REdgeInsets.all(AppPadding.p20),
       decoration: BoxDecoration(
         color: AppColors.getSurfaceColor(context),
-        borderRadius: BorderRadius.circular(AppSize.s16),
+        borderRadius: BorderRadius.circular(AppSize.s20),
         boxShadow: [
           BoxShadow(
-            color: AppColors.getTextSecondaryColor(context).withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
+            color: AppColors.getCardShadowColor(context),
+            blurRadius: 15,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
@@ -27,7 +27,7 @@ class CompletionRateCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Completion Rate',
+                S.of(context).completion_rate,
                 style: getMediumStyle(
                   color: AppColors.getTextSecondaryColor(context),
                   fontSize: FontSizeManager.s16,
@@ -38,26 +38,28 @@ class CompletionRateCard extends StatelessWidget {
                 '${(completionRate * 100).toStringAsFixed(1)}%',
                 style: getSemiBoldStyle(
                   color: AppColors.getTextPrimaryColor(context),
-                  fontSize: FontSizeManager.s30,
+                  fontSize: FontSizeManager.s32,
                 ),
               ),
             ],
           ),
           CircularPercentIndicator(
-            radius: AppSize.s40.r,
-            lineWidth: AppSize.s8.w,
-            percent: completionRate,
+            radius: 45.r,
+            lineWidth: 10.w,
+            percent: completionRate.clamp(0.0, 1.0),
             center: Text(
               '${(completionRate * 100).toStringAsFixed(0)}%',
-              style: getSemiBoldStyle(
-                color: AppColors.getTextPrimaryColor(context),
+              style: getBoldStyle(
+                color: AppColors.primary,
                 fontSize: FontSizeManager.s16,
               ),
             ),
             progressColor: AppColors.primary,
-            backgroundColor: AppColors.getBackgroundColor(context),
-            curve: Curves.easeIn,
+            backgroundColor: AppColors.primary.withOpacity(0.1),
+            circularStrokeCap: CircularStrokeCap.round,
+            curve: Curves.easeInOut,
             animation: true,
+            animationDuration: 1000,
           ),
         ],
       ),

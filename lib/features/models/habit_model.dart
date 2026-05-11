@@ -32,6 +32,15 @@ class HabitModel extends Equatable {
   @HiveField(7)
   final Map<String, bool> completedDates;
 
+  @HiveField(8)
+  final int? colorValue;
+  @HiveField(9)
+  final int? iconCodePoint;
+  @HiveField(10)
+  final int? sortOrder;
+  @HiveField(11)
+  final String? reminderTime;
+
   const HabitModel({
     required this.id,
     required this.name,
@@ -41,6 +50,10 @@ class HabitModel extends Equatable {
     this.interval,
     required this.creationDate,
     this.completedDates = const {},
+    this.colorValue,
+    this.iconCodePoint,
+    this.sortOrder,
+    this.reminderTime,
   });
 
   @override
@@ -53,6 +66,10 @@ class HabitModel extends Equatable {
         interval,
         creationDate,
         completedDates,
+        colorValue,
+        iconCodePoint,
+        sortOrder,
+        reminderTime,
       ];
 
   HabitModel copyWith({
@@ -64,6 +81,10 @@ class HabitModel extends Equatable {
     int? interval,
     DateTime? creationDate,
     Map<String, bool>? completedDates,
+    int? colorValue,
+    int? iconCodePoint,
+    int? sortOrder,
+    String? reminderTime,
   }) {
     return HabitModel(
       id: id ?? this.id,
@@ -74,6 +95,10 @@ class HabitModel extends Equatable {
       interval: interval ?? this.interval,
       creationDate: creationDate ?? this.creationDate,
       completedDates: completedDates ?? this.completedDates,
+      colorValue: colorValue ?? this.colorValue,
+      iconCodePoint: iconCodePoint ?? this.iconCodePoint,
+      sortOrder: sortOrder ?? this.sortOrder,
+      reminderTime: reminderTime ?? this.reminderTime,
     );
   }
 

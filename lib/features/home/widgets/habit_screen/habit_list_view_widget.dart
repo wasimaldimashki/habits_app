@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
@@ -28,7 +30,9 @@ class HabitListViewWidget extends StatelessWidget {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       onReorder: onReorder,
-      children: habits.map((habit) {
+      children: habits.asMap().entries.map((entry) {
+        final index = entry.key;
+        final habit = entry.value;
         final isCompleted = habit.isCompletedForDate(selectedDate);
         return Dismissible(
           key: ValueKey(habit.id),
@@ -110,7 +114,18 @@ class HabitListViewWidget extends StatelessWidget {
             ),
             child: ListTile(
               contentPadding: REdgeInsets.all(AppPadding.p16),
-              leading: const Icon(Icons.drag_handle),
+              leading: Container(
+                padding: REdgeInsets.all(AppPadding.p8),
+                decoration: BoxDecoration(
+                  color: Color(habit.colorValue ?? 0xFF025EC4).withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  IconData(habit.iconCodePoint ?? 0xe30d,
+                      fontFamily: 'MaterialIcons'),
+                  color: Color(habit.colorValue ?? 0xFF025EC4),
+                ),
+              ),
               title: Text(
                 habit.name,
                 style: getMediumStyle(
@@ -137,11 +152,19 @@ class HabitListViewWidget extends StatelessWidget {
                   color: isCompleted
                       ? AppColors.successColor
                       : AppColors.getTextSecondaryColor(context),
-                ),
-                onPressed: () => onToggleCompletion(habit),
+                )
+                    .animate(key: ValueKey(isCompleted))
+                    .scale(duration: 200.ms, curve: Curves.elasticOut),
+                onPressed: () {
+                  onToggleCompletion(habit);
+                  HapticFeedback.mediumImpact();
+                },
               ),
             ),
-          ),
+          )
+              .animate(delay: (index * 100).ms)
+              .fadeIn(duration: 500.ms)
+              .slideX(begin: 0.2, end: 0),
         );
       }).toList(),
     );

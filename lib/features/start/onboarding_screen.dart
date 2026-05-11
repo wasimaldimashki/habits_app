@@ -1,7 +1,6 @@
 import 'package:habits_app/core/cache/cache_service.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
 import 'package:habits_app/core/services/service_locator.dart';
-import 'package:habits_app/features/start/data/on_boarding_pages.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -82,8 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         if (!_isLastPage)
                           TextButton(
                             onPressed: () {
-                              _pageController
-                                  .jumpToPage(2);
+                              _pageController.jumpToPage(2);
                             },
                             child: Text(S.of(context).skip,
                                 style: TextStyle(

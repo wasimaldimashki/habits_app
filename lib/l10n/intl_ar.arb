@@ -102,5 +102,13 @@
     "select_days": "اختر الأيام",
     "select_interval": "اختر الفاصل الزمني",
     "no_data": "لا توجد بيانات",
-    "select_a_time": "اختر الوقت"
+    "select_a_time": "اختر الوقت",
+    "habit_reminder_title": "تذكير بالعادة",
+    "habit_reminder_body": "حان الوقت للقيام بعادتك: {name}",
+    "pick_color": "اختر لوناً",
+    "pick_icon": "اختر أيقونة",
+    "reminder_time": "وقت التذكير",
+    "best_streak": "أفضل سلسلة",
+    "current_streak": "السلسلة الحالية",
+    "notification_permission_warning": "تم حفظ العادة، لكن التذكير لن يعمل حتى تُفعّل \"المنبهات والتذكيرات\" لهذا التطبيق في الإعدادات."
 }
