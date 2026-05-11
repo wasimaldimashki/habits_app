@@ -1,12 +1,11 @@
 name: habits_app
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
   sdk: ">=3.4.3 <4.0.0"
-
 
 module:
   androidX: true
@@ -38,7 +37,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   flutter_cache_manager: ^3.4.1
   flutter_animate: ^4.5.2
-  flutter_launcher_icons: ^0.14.3
+  flutter_launcher_icons: ^0.14.4
   intl_utils: 2.8.8
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.1
