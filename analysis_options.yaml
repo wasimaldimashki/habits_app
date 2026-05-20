@@ -7,6 +7,7 @@ analyzer:
     library_prefixes: ignore
     library_private_types_in_public_api: ignore
     must_be_immutable: ignore
+    non_const_argument_for_const_parameter: ignore
     non_constant_identifier_names: ignore
     override_on_non_overriding_member: ignore
     prefer_interpolation_to_compose_strings: ignore

@@ -1,5 +1,6 @@
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:habits_app/core/constants/habit_icons.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
 import 'package:habits_app/features/add_habit/cubit/add_habit_cubit.dart';
 import 'package:habits_app/features/add_habit/widgets/build_reminder_picker.dart';
@@ -278,22 +279,7 @@ class _AddHabitScreenState extends State<AddHabitScreen> {
   }
 
   Widget _buildIconPicker(AddHabitCubit cubit, AddHabitState state) {
-    final icons = [
-      Icons.task_alt,
-      Icons.fitness_center,
-      Icons.book,
-      Icons.water_drop,
-      Icons.self_improvement,
-      Icons.code,
-      Icons.brush,
-      Icons.shopping_basket,
-      Icons.restaurant,
-      Icons.access_alarm,
-      Icons.home,
-      Icons.work,
-      Icons.message,
-      Icons.medication,
-    ];
+    final icons = HabitIcons.pickerIcons;
 
     return SizedBox(
       height: 60.h,

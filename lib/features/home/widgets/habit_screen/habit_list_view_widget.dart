@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:habits_app/core/export/lib_exports.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:habits_app/features/home/cubits/habit_screen_cubit/habit_screen_cubit.dart';
+import 'package:habits_app/core/constants/habit_icons.dart';
 import 'package:habits_app/features/models/habit_model.dart';
 
 class HabitListViewWidget extends StatelessWidget {
@@ -121,8 +122,7 @@ class HabitListViewWidget extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Icon(
-                  IconData(habit.iconCodePoint ?? 0xe30d,
-                      fontFamily: 'MaterialIcons'),
+                  HabitIcons.fromCodePoint(habit.iconCodePoint),
                   color: Color(habit.colorValue ?? 0xFF025EC4),
                 ),
               ),
