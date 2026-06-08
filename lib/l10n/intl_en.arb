@@ -119,7 +119,7 @@
     "privacy_policy_s2_title": "2. How We Use Your Information",
     "privacy_policy_s2_body": "Your information is used only to provide App features, including:\n\n• Displaying your profile and habits.\n• Tracking completion and calculating statistics and streaks.\n• Scheduling optional local reminder notifications.\n• Remembering your language and theme preferences.",
     "privacy_policy_s3_title": "3. Data Storage",
-    "privacy_policy_s3_body": "All profile and habit data is stored locally on your device using Hive and SharedPreferences. Theme and language preferences are also stored locally. We do not upload your personal data to our own servers. Data may be included in your device's operating-system backup if you enable device backup.",
+    "privacy_policy_s3_body": "All profile and habit data is stored locally on your device. Theme and language preferences are also stored locally. We do not upload your personal data to our own servers. Data may be included in your device's operating-system backup if you enable device backup.",
     "privacy_policy_s4_title": "4. Permissions",
     "privacy_policy_s4_body": "Depending on the features you use, the App may request:\n\n• Notifications and exact alarms: to deliver optional habit reminders at scheduled times.\n• Boot completed: to reschedule reminders after your device restarts.\n• Internet access: to load default profile avatars and download fonts.\n\nBiometric permissions may appear in the system manifest, but biometric authentication is not currently used in the App.",
     "privacy_policy_s5_title": "5. Third-Party Services",

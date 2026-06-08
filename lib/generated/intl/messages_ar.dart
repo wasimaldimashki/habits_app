@@ -119,7 +119,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacy_policy":
             MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
         "privacy_policy_intro": MessageLookupByLibrary.simpleMessage(
-            "تطبيق العادات (\"التطبيق\") هو تطبيق لتتبع العادات طوّره واسم الديمشقي. توضّح سياسة الخصوصية هذه كيفية التعامل مع المعلومات عند استخدام التطبيق. التطبيق مصمّم للعمل بشكل أساسي على جهازك ولا يتطلب حساباً عبر الإنترنت."),
+            "تطبيق العادات (\"التطبيق\") هو تطبيق لتتبع العادات طوّره وسيم الدمشقي. توضّح سياسة الخصوصية هذه كيفية التعامل مع المعلومات عند استخدام التطبيق. التطبيق مصمّم للعمل بشكل أساسي على جهازك ولا يتطلب حساباً عبر الإنترنت."),
         "privacy_policy_last_updated":
             MessageLookupByLibrary.simpleMessage("آخر تحديث: 20 مايو 2026"),
         "privacy_policy_s1_body": MessageLookupByLibrary.simpleMessage(
@@ -131,7 +131,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacy_policy_s2_title":
             MessageLookupByLibrary.simpleMessage("2. كيفية استخدام معلوماتك"),
         "privacy_policy_s3_body": MessageLookupByLibrary.simpleMessage(
-            "تُخزَّن جميع بيانات الملف الشخصي والعادات محلياً على جهازك باستخدام Hive وSharedPreferences. كما تُخزَّن تفضيلات المظهر واللغة محلياً. لا نرفع بياناتك الشخصية إلى خوادمنا. وقد تُدرَج البيانات في النسخ الاحتياطي لنظام تشغيل جهازك إذا فعّلت هذه الميزة."),
+            "تُخزَّن جميع بيانات الملف الشخصي والعادات محلياً على جهازك. كما تُخزَّن تفضيلات المظهر واللغة محلياً. لا نرفع بياناتك الشخصية إلى خوادمنا. وقد تُدرَج البيانات في النسخ الاحتياطي لنظام تشغيل جهازك إذا فعّلت هذه الميزة."),
         "privacy_policy_s3_title":
             MessageLookupByLibrary.simpleMessage("3. تخزين البيانات"),
         "privacy_policy_s4_body": MessageLookupByLibrary.simpleMessage(

@@ -132,7 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacy_policy_s2_title": MessageLookupByLibrary.simpleMessage(
             "2. How We Use Your Information"),
         "privacy_policy_s3_body": MessageLookupByLibrary.simpleMessage(
-            "All profile and habit data is stored locally on your device using Hive and SharedPreferences. Theme and language preferences are also stored locally. We do not upload your personal data to our own servers. Data may be included in your device\'s operating-system backup if you enable device backup."),
+            "All profile and habit data is stored locally on your device. Theme and language preferences are also stored locally. We do not upload your personal data to our own servers. Data may be included in your device\'s operating-system backup if you enable device backup."),
         "privacy_policy_s3_title":
             MessageLookupByLibrary.simpleMessage("3. Data Storage"),
         "privacy_policy_s4_body": MessageLookupByLibrary.simpleMessage(

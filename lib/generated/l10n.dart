@@ -1110,10 +1110,10 @@ class S {
     );
   }
 
-  /// `All profile and habit data is stored locally on your device using Hive and SharedPreferences. Theme and language preferences are also stored locally. We do not upload your personal data to our own servers. Data may be included in your device's operating-system backup if you enable device backup.`
+  /// `All profile and habit data is stored locally on your device. Theme and language preferences are also stored locally. We do not upload your personal data to our own servers. Data may be included in your device's operating-system backup if you enable device backup.`
   String get privacy_policy_s3_body {
     return Intl.message(
-      'All profile and habit data is stored locally on your device using Hive and SharedPreferences. Theme and language preferences are also stored locally. We do not upload your personal data to our own servers. Data may be included in your device\'s operating-system backup if you enable device backup.',
+      'All profile and habit data is stored locally on your device. Theme and language preferences are also stored locally. We do not upload your personal data to our own servers. Data may be included in your device\'s operating-system backup if you enable device backup.',
       name: 'privacy_policy_s3_body',
       desc: '',
       args: [],
