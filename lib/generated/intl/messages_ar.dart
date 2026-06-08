@@ -116,6 +116,48 @@ class MessageLookup extends MessageLookupByLibrary {
         "pick_icon": MessageLookupByLibrary.simpleMessage("اختر أيقونة"),
         "please_enter_your_name":
             MessageLookupByLibrary.simpleMessage("الرجاء إدخال اسمك"),
+        "privacy_policy":
+            MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
+        "privacy_policy_intro": MessageLookupByLibrary.simpleMessage(
+            "تطبيق العادات (\"التطبيق\") هو تطبيق لتتبع العادات طوّره واسم الديمشقي. توضّح سياسة الخصوصية هذه كيفية التعامل مع المعلومات عند استخدام التطبيق. التطبيق مصمّم للعمل بشكل أساسي على جهازك ولا يتطلب حساباً عبر الإنترنت."),
+        "privacy_policy_last_updated":
+            MessageLookupByLibrary.simpleMessage("آخر تحديث: 20 مايو 2026"),
+        "privacy_policy_s1_body": MessageLookupByLibrary.simpleMessage(
+            "يخزّن التطبيق المعلومات التالية محلياً على جهازك:\n\n• بيانات الملف الشخصي: الاسم المعروض والجنس اللذان تقدّمهما أثناء الإعداد.\n• بيانات العادات: أسماء العادات، والوصف الاختياري، وإعدادات التكرار، وسجل الإكمال، والألوان، والأيقونات، وأوقات التذكير الاختيارية.\n• تفضيلات التطبيق: المظهر (فاتح/داكن)، واللغة، وحالة إكمال التعريف بالتطبيق.\n\nلا نجمع بريدك الإلكتروني أو رقم هاتفك أو كلمة مرور أو معلومات دفع. ولا نُدير حسابات مستخدمين على خوادم خارجية."),
+        "privacy_policy_s1_title":
+            MessageLookupByLibrary.simpleMessage("1. المعلومات التي نجمعها"),
+        "privacy_policy_s2_body": MessageLookupByLibrary.simpleMessage(
+            "تُستخدم معلوماتك فقط لتوفير ميزات التطبيق، بما في ذلك:\n\n• عرض ملفك الشخصي وعاداتك.\n• تتبع الإكمال وحساب الإحصائيات والسلاسل.\n• جدولة تذكيرات محلية اختيارية.\n• حفظ تفضيلات اللغة والمظهر."),
+        "privacy_policy_s2_title":
+            MessageLookupByLibrary.simpleMessage("2. كيفية استخدام معلوماتك"),
+        "privacy_policy_s3_body": MessageLookupByLibrary.simpleMessage(
+            "تُخزَّن جميع بيانات الملف الشخصي والعادات محلياً على جهازك باستخدام Hive وSharedPreferences. كما تُخزَّن تفضيلات المظهر واللغة محلياً. لا نرفع بياناتك الشخصية إلى خوادمنا. وقد تُدرَج البيانات في النسخ الاحتياطي لنظام تشغيل جهازك إذا فعّلت هذه الميزة."),
+        "privacy_policy_s3_title":
+            MessageLookupByLibrary.simpleMessage("3. تخزين البيانات"),
+        "privacy_policy_s4_body": MessageLookupByLibrary.simpleMessage(
+            "حسب الميزات التي تستخدمها، قد يطلب التطبيق:\n\n• الإشعارات والمنبهات الدقيقة: لإرسال تذكيرات اختيارية بالعادات في الأوقات المحددة.\n• بدء التشغيل بعد إعادة التشغيل: لإعادة جدولة التذكيرات بعد إعادة تشغيل الجهاز.\n• الوصول إلى الإنترنت: لتحميل صور الملف الشخصي الافتراضية وتنزيل الخطوط.\n\nقد تظهر أذونات بيومترية في ملف التطبيق، لكن المصادقة البيومترية غير مستخدمة حالياً في التطبيق."),
+        "privacy_policy_s4_title":
+            MessageLookupByLibrary.simpleMessage("4. الأذونات"),
+        "privacy_policy_s5_body": MessageLookupByLibrary.simpleMessage(
+            "قد يتصل التطبيق بخدمات طرف ثالث في حالات محدودة فقط:\n\n• avatar.iran.liara.run: يوفّر صوراً افتراضية للملف الشخصي حسب الجنس.\n• Google Fonts: قد يتم تنزيل الخطوط من خوادم Google.\n• روابط التواصل في صفحة عن التطبيق: تُفتح فقط عند النقر عليها.\n\nلا يتضمّن التطبيق أدوات تحليلات أو إعلانات أو تقارير أعطال."),
+        "privacy_policy_s5_title":
+            MessageLookupByLibrary.simpleMessage("5. خدمات الطرف الثالث"),
+        "privacy_policy_s6_body": MessageLookupByLibrary.simpleMessage(
+            "لا نبيع أو نؤجّر أو نتاجر بمعلوماتك الشخصية. لا تُشارَك بياناتك مع أطراف ثالثة إلا للخدمات المحدودة المذكورة أعلاه، وعند الحاجة فقط لتشغيل تلك الميزات."),
+        "privacy_policy_s6_title":
+            MessageLookupByLibrary.simpleMessage("6. مشاركة البيانات"),
+        "privacy_policy_s7_body": MessageLookupByLibrary.simpleMessage(
+            "يمكنك حذف جميع بيانات التطبيق في أي وقت من الملف الشخصي > إعادة تعيين بيانات التطبيق. كما يؤدي إلغاء تثبيت التطبيق إلى حذف البيانات المخزّنة محلياً، ما لم يستعِدها النسخ الاحتياطي لجهازك."),
+        "privacy_policy_s7_title":
+            MessageLookupByLibrary.simpleMessage("7. حذف البيانات"),
+        "privacy_policy_s8_body": MessageLookupByLibrary.simpleMessage(
+            "التطبيق غير موجّه للأطفال دون 13 عاماً ولا يجمع عن قصد معرّفات شخصية من الأطفال. قد نحدّث سياسة الخصوصية من وقت لآخر. عند التحديث، سنعدّل تاريخ \"آخر تحديث\" في أعلى هذه الصفحة."),
+        "privacy_policy_s8_title": MessageLookupByLibrary.simpleMessage(
+            "8. خصوصية الأطفال وتغييرات السياسة"),
+        "privacy_policy_s9_body": MessageLookupByLibrary.simpleMessage(
+            "إذا كانت لديك أسئلة حول سياسة الخصوصية، يمكنك التواصل مع المطوّر عبر روابط التواصل أو رقم واتساب الظاهر في صفحة عن التطبيق."),
+        "privacy_policy_s9_title":
+            MessageLookupByLibrary.simpleMessage("9. تواصل معنا"),
         "profile": MessageLookupByLibrary.simpleMessage("الملف الشخصي"),
         "profile_updated_successfully": MessageLookupByLibrary.simpleMessage(
             "تم تحديث الملف الشخصي بنجاح!"),

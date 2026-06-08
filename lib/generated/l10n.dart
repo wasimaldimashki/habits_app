@@ -1029,6 +1029,216 @@ class S {
       args: [],
     );
   }
+
+  /// `Privacy Policy`
+  String get privacy_policy {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'privacy_policy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last updated: May 20, 2026`
+  String get privacy_policy_last_updated {
+    return Intl.message(
+      'Last updated: May 20, 2026',
+      name: 'privacy_policy_last_updated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Habit App ("the App") is a habit-tracking application developed by Wasim Aldiamshki. This Privacy Policy explains what information the App handles and how it is used. The App is designed to work primarily on your device and does not require an online account.`
+  String get privacy_policy_intro {
+    return Intl.message(
+      'Habit App ("the App") is a habit-tracking application developed by Wasim Aldiamshki. This Privacy Policy explains what information the App handles and how it is used. The App is designed to work primarily on your device and does not require an online account.',
+      name: 'privacy_policy_intro',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `1. Information We Collect`
+  String get privacy_policy_s1_title {
+    return Intl.message(
+      '1. Information We Collect',
+      name: 'privacy_policy_s1_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The App stores the following information locally on your device:\n\n• Profile data: display name and gender you provide during setup.\n• Habit data: habit names, optional descriptions, recurrence settings, completion history, colors, icons, and optional reminder times.\n• App preferences: theme (light/dark), language, and whether onboarding has been completed.\n\nWe do not collect your email address, phone number, password, or payment information. We do not operate user accounts on external servers.`
+  String get privacy_policy_s1_body {
+    return Intl.message(
+      'The App stores the following information locally on your device:\n\n• Profile data: display name and gender you provide during setup.\n• Habit data: habit names, optional descriptions, recurrence settings, completion history, colors, icons, and optional reminder times.\n• App preferences: theme (light/dark), language, and whether onboarding has been completed.\n\nWe do not collect your email address, phone number, password, or payment information. We do not operate user accounts on external servers.',
+      name: 'privacy_policy_s1_body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `2. How We Use Your Information`
+  String get privacy_policy_s2_title {
+    return Intl.message(
+      '2. How We Use Your Information',
+      name: 'privacy_policy_s2_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your information is used only to provide App features, including:\n\n• Displaying your profile and habits.\n• Tracking completion and calculating statistics and streaks.\n• Scheduling optional local reminder notifications.\n• Remembering your language and theme preferences.`
+  String get privacy_policy_s2_body {
+    return Intl.message(
+      'Your information is used only to provide App features, including:\n\n• Displaying your profile and habits.\n• Tracking completion and calculating statistics and streaks.\n• Scheduling optional local reminder notifications.\n• Remembering your language and theme preferences.',
+      name: 'privacy_policy_s2_body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `3. Data Storage`
+  String get privacy_policy_s3_title {
+    return Intl.message(
+      '3. Data Storage',
+      name: 'privacy_policy_s3_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All profile and habit data is stored locally on your device using Hive and SharedPreferences. Theme and language preferences are also stored locally. We do not upload your personal data to our own servers. Data may be included in your device's operating-system backup if you enable device backup.`
+  String get privacy_policy_s3_body {
+    return Intl.message(
+      'All profile and habit data is stored locally on your device using Hive and SharedPreferences. Theme and language preferences are also stored locally. We do not upload your personal data to our own servers. Data may be included in your device\'s operating-system backup if you enable device backup.',
+      name: 'privacy_policy_s3_body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `4. Permissions`
+  String get privacy_policy_s4_title {
+    return Intl.message(
+      '4. Permissions',
+      name: 'privacy_policy_s4_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Depending on the features you use, the App may request:\n\n• Notifications and exact alarms: to deliver optional habit reminders at scheduled times.\n• Boot completed: to reschedule reminders after your device restarts.\n• Internet access: to load default profile avatars and download fonts.\n\nBiometric permissions may appear in the system manifest, but biometric authentication is not currently used in the App.`
+  String get privacy_policy_s4_body {
+    return Intl.message(
+      'Depending on the features you use, the App may request:\n\n• Notifications and exact alarms: to deliver optional habit reminders at scheduled times.\n• Boot completed: to reschedule reminders after your device restarts.\n• Internet access: to load default profile avatars and download fonts.\n\nBiometric permissions may appear in the system manifest, but biometric authentication is not currently used in the App.',
+      name: 'privacy_policy_s4_body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `5. Third-Party Services`
+  String get privacy_policy_s5_title {
+    return Intl.message(
+      '5. Third-Party Services',
+      name: 'privacy_policy_s5_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The App may connect to third-party services only in limited cases:\n\n• avatar.iran.liara.run: provides default profile images based on gender.\n• Google Fonts: typography may be downloaded from Google servers.\n• Social links in About Us: opened only when you choose to tap them.\n\nThe App does not include analytics, advertising, or crash-reporting SDKs.`
+  String get privacy_policy_s5_body {
+    return Intl.message(
+      'The App may connect to third-party services only in limited cases:\n\n• avatar.iran.liara.run: provides default profile images based on gender.\n• Google Fonts: typography may be downloaded from Google servers.\n• Social links in About Us: opened only when you choose to tap them.\n\nThe App does not include analytics, advertising, or crash-reporting SDKs.',
+      name: 'privacy_policy_s5_body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `6. Data Sharing`
+  String get privacy_policy_s6_title {
+    return Intl.message(
+      '6. Data Sharing',
+      name: 'privacy_policy_s6_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `We do not sell, rent, or trade your personal information. Your data is not shared with third parties except for the limited third-party services described above, and only when needed for those features to work.`
+  String get privacy_policy_s6_body {
+    return Intl.message(
+      'We do not sell, rent, or trade your personal information. Your data is not shared with third parties except for the limited third-party services described above, and only when needed for those features to work.',
+      name: 'privacy_policy_s6_body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `7. Data Deletion`
+  String get privacy_policy_s7_title {
+    return Intl.message(
+      '7. Data Deletion',
+      name: 'privacy_policy_s7_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can delete all App data at any time from Profile > Reset App Data. Uninstalling the App from your device also removes locally stored data, unless your device backup restores it.`
+  String get privacy_policy_s7_body {
+    return Intl.message(
+      'You can delete all App data at any time from Profile > Reset App Data. Uninstalling the App from your device also removes locally stored data, unless your device backup restores it.',
+      name: 'privacy_policy_s7_body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `8. Children's Privacy & Policy Changes`
+  String get privacy_policy_s8_title {
+    return Intl.message(
+      '8. Children\'s Privacy & Policy Changes',
+      name: 'privacy_policy_s8_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The App is not directed at children under 13 and does not knowingly collect personal identifiers from children. We may update this Privacy Policy from time to time. When we do, we will revise the "Last updated" date at the top of this page.`
+  String get privacy_policy_s8_body {
+    return Intl.message(
+      'The App is not directed at children under 13 and does not knowingly collect personal identifiers from children. We may update this Privacy Policy from time to time. When we do, we will revise the "Last updated" date at the top of this page.',
+      name: 'privacy_policy_s8_body',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `9. Contact Us`
+  String get privacy_policy_s9_title {
+    return Intl.message(
+      '9. Contact Us',
+      name: 'privacy_policy_s9_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `If you have questions about this Privacy Policy, contact the developer through the social links or WhatsApp number shown on the About Us page.`
+  String get privacy_policy_s9_body {
+    return Intl.message(
+      'If you have questions about this Privacy Policy, contact the developer through the social links or WhatsApp number shown on the About Us page.',
+      name: 'privacy_policy_s9_body',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

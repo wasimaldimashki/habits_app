@@ -101,6 +101,14 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 12.h),
                     ProfileCardWidget(
+                      title: S.of(context).privacy_policy,
+                      icon: Icons.privacy_tip_outlined,
+                      onTap: () {
+                        context.push(AppRoutes.privacyPolicyScreen);
+                      },
+                    ),
+                    SizedBox(height: 12.h),
+                    ProfileCardWidget(
                       title: S.of(context).about_us,
                       icon: Icons.info,
                       onTap: () {

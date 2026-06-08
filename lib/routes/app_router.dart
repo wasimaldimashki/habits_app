@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:habits_app/core/app_observer/navigator_observer.dart';
 import 'package:habits_app/core/keys/app_keys.dart';
 import 'package:habits_app/features/about_us/about_us.dart';
+import 'package:habits_app/features/privacy_policy/privacy_policy.dart';
 import 'package:habits_app/features/add_habit/cubit/add_habit_cubit.dart';
 import 'package:habits_app/features/add_habit/screens/add_habit.dart';
 import 'package:habits_app/features/home/cubits/habit_screen_cubit/habit_screen_cubit.dart';
@@ -72,6 +73,12 @@ class AppRouter {
         name: 'About Us Screen',
         path: AppRoutes.aboutUsScreen,
         builder: (context, state) => const AboutUsScreen(),
+      ),
+      //** Privacy Policy Screen **/
+      GoRoute(
+        name: 'Privacy Policy Screen',
+        path: AppRoutes.privacyPolicyScreen,
+        builder: (context, state) => const PrivacyPolicyScreen(),
       ),
       //** Update Profile Screen **/
       GoRoute(

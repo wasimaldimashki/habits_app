@@ -7,5 +7,6 @@ class AppRoutes {
   static const String manageHabitScreen = '/manage_habit_screen';
   static const String updateProfileScreen = '/update_profile_screen';
   static const String aboutUsScreen = '/about_us_screen';
+  static const String privacyPolicyScreen = '/privacy_policy_screen';
   static const String unknownScreen = '/unknown_screen';
 }
